@@ -18,17 +18,18 @@
 
 We follow a **feature-based architecture**, where each major functionality is encapsulated within its own module. This promotes separation of concerns and improves maintainability.
 
+```
 lib/
-├── features/
-│ ├── bible_reading/
-│ ├── verse_favorites/
-│ ├── ai_recommendation/
-│ └── ...
-├── shared/
-│ ├── widgets/
-│ ├── services/
-│ └── ...
-
+|-- features/
+|  |-- bible_reading/
+|  |-- verse_favorites/
+|  |-- ai_recommandation/
+|  |-- ...
+|-- shared/
+|  |-- widgets/
+|  |-- services/
+|  |-- ...
+```
 ---
 
 ## 🧰 Tech Stack
