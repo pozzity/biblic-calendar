@@ -70,7 +70,7 @@ jobs:
 
       # Store the failures images as artifacts.
       # This allows us to easily debug failures in pipelines.
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: goldens-failures
           path: "**/failures/*.png"
