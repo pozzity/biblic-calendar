@@ -1,0 +1,6 @@
+{
+    "welcome": "Bienvenue dans Calendrier Biblique!",
+    "@welcome": {
+    "description": "Organises ta Bible."
+    }
+}
