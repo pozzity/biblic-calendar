@@ -9,5 +9,5 @@ class AppLocalizationsFr extends AppLocalizations {
   AppLocalizationsFr([String locale = 'fr']) : super(locale);
 
   @override
-  String get welcome => 'Welcome in Biblic Calendar!';
+  String get welcome => 'Bienvenue dans Calendrier Biblique!';
 }

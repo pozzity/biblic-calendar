@@ -98,7 +98,7 @@ abstract class AppLocalizations {
     Locale('fr'),
   ];
 
-  /// Organise your Bible
+  /// Organise your Bible.
   ///
   /// In en, this message translates to:
   /// **'Welcome in Biblic Calendar!'**
