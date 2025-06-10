@@ -41,6 +41,50 @@ jobs:
       # Run dart_code_linter additional analysis.
       - run: flutter pub run dart_code_linter:metrics analyze lib --reporter=github
 
+  intl-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2.12.0
+        with:
+          flutter-version: ${{ env.FLUTTER_SDK_VERSION }}
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run intl_translation generator
+        run: flutter pub run intl_translation:generate_from_arb lib/services/intl/intl.dart i18n/*.arb --output-dir=lib/services/intl/generated
+
+
+      - name: Check for uncommitted changes in generated files
+        id: check_diff
+        run: |
+          if [[ -n $(git status --porcelain lib/services/intl/generated) ]]; then
+            echo "files_changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "files_changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Comment on PR if generated files changed
+        if: steps.check_diff.outputs.files_changed == 'true'
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ❌ **Generated localization files are outdated.**
+            Please run the following command and commit the updated files:
+
+            ```
+            flutter pub run intl_translation:generate_from_arb lib/services/intl/intl.dart i18n/*.arb --output-dir=lib/services/intl/generated
+            ```
+
+      - name: Fail if generated files are outdated
+        if: steps.check_diff.outputs.files_changed == 'true'
+        run: exit 1
+
   unit-tests:
     runs-on: ubuntu-latest
     timeout-minutes: 30
