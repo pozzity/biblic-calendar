@@ -1,7 +1,10 @@
 import 'package:biblic_calendar/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'services/intl/intl.dart';
 
 void main() {
+  Get.put(IntlService());
   runApp(const MyApp());
 }
 
