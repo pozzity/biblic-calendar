@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'services/intl/intl.dart';
 
 void main() {
+  Get.put(IntlService());
   runApp(const MyApp());
 }
 
