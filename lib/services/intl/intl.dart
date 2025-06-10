@@ -45,4 +45,5 @@ class IntlService extends GetxService {
   }
 
   String get start => Intl.message('start');
+  String get ignore => Intl.message('ignore');
 }
