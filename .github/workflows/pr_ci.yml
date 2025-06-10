@@ -74,12 +74,29 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
+            <!-- localization-check -->
             ❌ **Generated localization files are outdated.**
             Please run the following command and commit the updated files:
 
             ```
             flutter pub run intl_translation:generate_from_arb lib/services/intl/intl.dart i18n/*.arb --output-dir=lib/services/intl/generated
             ```
+
+      - name: Find the comment to delete
+        if: steps.check_diff.outputs.files_changed == 'false'
+        id: find_comment
+        uses: peter-evans/find-comment@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body-includes: <!-- localization-check -->
+      
+      - name: Delete the comment
+        if: steps.find_comment.outputs.comment-id != ''
+        uses: peter-evans/delete-comment@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          comment-id: ${{ steps.find_comment.outputs.comment-id }}
 
       - name: Fail if generated files are outdated
         if: steps.check_diff.outputs.files_changed == 'true'
