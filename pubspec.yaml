@@ -36,18 +36,20 @@ dependencies:
   cupertino_icons: 1.0.8
   
   # Contains code to deal with internationalized/localized messages, date and
-  # number formatting and parsing, bi-directional text, and other 
+  # number formatting and parsing, bi-directio`nal text, and other 
   # internationalization issues.
-  intl: 0.20.2
+  intl: any
 
   # The package to handle state management.
   get: 4.7.2
 
   # Flutter database for super-fast NoSQL ACID compliant object persistence.
-  objectbox: 4.3.0
+  objectbox: 4.1.0
+  objectbox_flutter_libs: any
+  path_provider: ^2.1.5
+  path: ^1.9.0
   flutter_localizations:
     sdk: flutter
-  intl: any
 
 dev_dependencies:
   flutter_test:
@@ -70,6 +72,8 @@ dev_dependencies:
   # internationalization issues.
   # e.g: > flutter pub run intl_translation:generate_from_arb lib/services/intl/intl.dart i18n/*.arb --output-dir=lib/services/intl/generated
   intl_translation: 0.20.1
+  build_runner: 2.4.11
+  objectbox_generator: 4.1.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

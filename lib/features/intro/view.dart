@@ -1,86 +1,74 @@
+import 'package:biblic_calendar/features/intro/widgets/language.dart';
 import 'package:biblic_calendar/services/intl/intl.dart';
+import 'package:biblic_calendar/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import 'controller.dart';
 
 class IntroView extends StatelessWidget {
   const IntroView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    Get.put(IntroController());
+    return const _FirstStepPage();
   }
 }
 
-class FirstStepPage extends StatefulWidget {
-  @override
-  _FirstStepPageState createState() => _FirstStepPageState();
-}
-
-class _FirstStepPageState extends State<FirstStepPage> {
-  final _FirstStepPageData that;
-
-  _FirstStepPageState() : that = _FirstStepPageData() {
-    that.view = this;
-  }
-
-  String? _btText;
-  bool isEnd = false;
+class _FirstStepPage extends GetView<IntroController> {
+  const _FirstStepPage();
 
   @override
   Widget build(BuildContext context) {
     final screen = MediaQuery.of(context).size;
-    _btText = isEnd ? IntlService.instance.start : S.of(context).ignore;
 
-    if (that.viewState == 0)
-      return Scaffold(
-          body: SafeArea(
-        child: Stack(
-          children: [
-            Positioned(
+    return Scaffold(
+        body: SafeArea(
+      child: Stack(
+        children: [
+          Positioned(
+              top: 0,
+              right: 0,
+              left: 0,
+              bottom: 0,
+              child: SingleChildScrollView(
+                  child: SizedBox(
+                      height: screen.height > 390 ? screen.height - 30 : 360,
+                      child: showPageView()))),
+          if (!controller.hasSelectedLanguage.value)
+            Obx(() => Positioned(
                 top: 0,
                 right: 0,
                 left: 0,
                 bottom: 0,
-                child: SingleChildScrollView(
-                    child: SizedBox(
-                        height: screen.height > 390 ? screen.height - 30 : 360,
-                        child: showPageView()))),
-            if (that.langSelected == null || that.langSelected.length == 0)
-              Positioned(
-                  top: 0,
-                  right: 0,
-                  left: 0,
-                  bottom: 0,
-                  child: LanguageView(
-                    onSave: (ctx, lang) {
-                      setState(() {
-                        that.langSelected = lang;
-                      });
-                    },
-                  )),
-          ],
-        ),
-      ));
-    if (that.viewState == 1)
-      return BibleTranslatesPage(afterDownload: (_) async {
-        (await fn.pref).setBool(fn.KEY.firstLoad, false);
-        goToHome();
-      });
-    return Scaffold(body: Container());
+                child: LanguageView(
+                  onSave: (_) {
+                    controller.hasSelectedLanguage.value = true;
+                  },
+                ))),
+        ],
+      ),
+    ));
   }
-
-  void update() => setState(() {});
 
   Widget showPageView() {
     final displays = tabDisplays();
     return DefaultTabController(
-        length: 3,
+        length: displays.length,
         child: Builder(builder: (BuildContext context) {
           final defaultCtrl = DefaultTabController.of(context);
           defaultCtrl.addListener(() {
-            if (defaultCtrl.index == displays.length - 1 && !isEnd)
-              return setState(() => isEnd = true);
-            if (defaultCtrl.index != displays.length - 1 && isEnd)
-              return setState(() => isEnd = false);
+            if (defaultCtrl.index == displays.length - 1 &&
+                !controller.isEnd.value) {
+              controller.isEnd.value = true;
+              return;
+            }
+            if (defaultCtrl.index != displays.length - 1 &&
+                controller.isEnd.value) {
+              controller.isEnd.value = false;
+              return;
+            }
           });
           return Column(children: <Widget>[
             Expanded(child: TabBarView(children: displays)),
@@ -88,19 +76,20 @@ class _FirstStepPageState extends State<FirstStepPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   TabPageSelector(),
-                  RaisedButton(
-                      color: Colors.brown,
-                      child: Text(
-                        _btText,
-                        style: TextStyle(color: Colors.white70),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.brown,
                       ),
+                      child: Obx(() => Text(
+                            controller.btText,
+                            style: TextStyle(color: Colors.white70),
+                          )),
                       onPressed: () {
                         final TabController ctrl =
                             DefaultTabController.of(context);
-                        if (ctrl.index == displays.length - 1)
-                          setState(() {
-                            that.viewState = 1;
-                          });
+                        if (ctrl.index == displays.length - 1) {
+                          controller.hasSelectedLanguage.value = true;
+                        }
 
                         if (!ctrl.indexIsChanging) {
                           ctrl.animateTo(displays.length - 1);
@@ -118,13 +107,13 @@ class _FirstStepPageState extends State<FirstStepPage> {
         Padding(
           padding: const EdgeInsets.only(bottom: 50.0),
           child: Text(
-            S.of(context).module_welcome_header,
-            style: fn.style.tsHeader2,
+            IntlService.instance.moduleWelcomeHeader,
+            style: Styles.i.tsHeader2,
           ),
         ),
         Text(
-          S.of(context).module_welcome_content,
-          style: fn.style.tsHeader1,
+          IntlService.instance.moduleWelcomeContent,
+          style: Styles.i.tsHeader1,
         )
       ],
     );
@@ -134,13 +123,13 @@ class _FirstStepPageState extends State<FirstStepPage> {
         Padding(
           padding: const EdgeInsets.only(bottom: 50.0),
           child: Text(
-            S.of(context).module_bible_header,
-            style: fn.style.tsHeader2,
+            IntlService.instance.moduleBibleHeader,
+            style: Styles.i.tsHeader2,
           ),
         ),
         Text(
-          S.of(context).module_bible_content,
-          style: fn.style.tsHeader1,
+          IntlService.instance.moduleBibleContent,
+          style: Styles.i.tsHeader1,
         )
       ],
     );
@@ -150,13 +139,13 @@ class _FirstStepPageState extends State<FirstStepPage> {
         Padding(
           padding: const EdgeInsets.only(bottom: 50.0),
           child: Text(
-            S.of(context).module_calendar_header,
-            style: fn.style.tsHeader2,
+            IntlService.instance.moduleCalendarHeader,
+            style: Styles.i.tsHeader2,
           ),
         ),
         Text(
-          S.of(context).module_calendar_content,
-          style: fn.style.tsHeader1,
+          IntlService.instance.moduleCalendarContent,
+          style: Styles.i.tsHeader1,
         )
       ],
     );
@@ -165,37 +154,5 @@ class _FirstStepPageState extends State<FirstStepPage> {
           child: wg,
         );
     return <Widget>[p(welcome), p(moduleBile), p(moduleCalendar)];
-  }
-
-  void goToHome() => Navigator.of(context)
-      .pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
-}
-
-class _FirstStepPageData {
-  _FirstStepPageState view;
-
-  /// retourne contient l'etat de l'application
-  /// 0: affichage des slides
-  /// 1: affichage des bible a telecharger
-  /// autre: chargement
-  int viewState;
-
-  String langSelected;
-
-  _FirstStepPageData() {
-    ready();
-  }
-
-  void ready() async {
-    final res = (await fn.pref).getBool(fn.KEY.firstLoad);
-    langSelected = (await fn.pref).getString(fn.KEY.lang);
-    fn.currentLang = langSelected ?? "en";
-    S.load(Locale(langSelected ?? "en"));
-    if (res != false) {
-      viewState = 0;
-    } else {
-      view?.goToHome();
-    }
-    view?.update();
   }
 }
