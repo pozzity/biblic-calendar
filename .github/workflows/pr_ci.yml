@@ -64,9 +64,9 @@ jobs:
         id: check_diff
         run: |
           if [[ -n $(git status --porcelain lib/services/intl/generated) ]]; then
-            echo "files_changed=true" >> $GITHUB_OUTPUT
+            echo 'files_changed=true' >> "$GITHUB_OUTPUT"
           else
-            echo "files_changed=false" >> $GITHUB_OUTPUT
+            echo 'files_changed=false' >> "$GITHUB_OUTPUT"
           fi
 
       - name: Find the comment to update
@@ -123,6 +123,11 @@ jobs:
       # Delete all existing coverage files.
       - run: find . -name \*lcov.info -type f -delete
 
+      # Download object-box library
+      - name: Download object-box library
+        shell: bash
+        run: bash <(curl -s https://raw.githubusercontent.com/objectbox/objectbox-dart/main/install.sh) --quiet
+
       # Run unit tests on all packages that contain tests.
       - run: flutter test --coverage
 
@@ -159,6 +164,12 @@ jobs:
 
       # Generate golden screenshots.
       - run: flutter test --update-goldens --tags=golden
+
+      # Download object-box library
+      - name: Download object-box library
+        shell: bash
+        run: bash <(curl -s https://raw.githubusercontent.com/objectbox/objectbox-dart/main/install.sh) --quiet
+
 
       # Store the golden images as artifacts.
       # This allows us to update the goldens with the ones

@@ -7,6 +7,24 @@ import 'package:intl/intl.dart';
 
 import 'generated/messages_all_locales.dart';
 
+extension LocaleHash on Locale {
+  String toHashString() {
+    return toString();
+  }
+
+  static Locale fromHashString(String hashString) {
+    for (final locale in IntlService.supportedLocales) {
+      if (locale.toHashString() == hashString) {
+        return locale;
+      }
+      if (hashString.startsWith(locale.languageCode)) {
+        return locale;
+      }
+    }
+    throw Exception('Unsupported locale hash string: $hashString');
+  }
+}
+
 /// Service for handling internationalization (i18n) in the app.
 class IntlService extends GetxService {
   /// A reactive locale.
@@ -16,7 +34,7 @@ class IntlService extends GetxService {
   Preference get pref => Get.find<Preference>();
 
   /// The locales that the app supports.
-  static const supportedLocales = [Locale('fr', 'FR'), Locale('en', 'US')];
+  static const supportedLocales = [Locale('en', 'US'), Locale('fr', 'FR')];
 
   /// The instance of the internationalization service.
   static IntlService get instance => Get.find<IntlService>();
@@ -26,13 +44,13 @@ class IntlService extends GetxService {
 
   ///
   IntlService._() : super() {
-    Intl.defaultLocale = locale.toString();
+    Intl.defaultLocale = locale.toHashString();
   }
 
   /// Create an instance of the internationalization service.
   static Future<IntlService> create() async {
     for (final locale in supportedLocales) {
-      await initializeMessages(locale.languageCode);
+      await initializeMessages(locale.toHashString());
     }
 
     return IntlService._();
@@ -48,7 +66,7 @@ class IntlService extends GetxService {
   }
 
   void updateLocale(Locale locale) {
-    Intl.defaultLocale = locale.toString();
+    Intl.defaultLocale = locale.toHashString();
     localeRx.value = locale;
   }
 

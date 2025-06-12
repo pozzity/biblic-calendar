@@ -46,7 +46,7 @@ We use **GitHub Actions** to automate testing and deployment processes. Pipeline
 
 - Code analysis and formatting checks
 - Unit and widget tests
-> pre-requisites: install objectbox library `bash <(curl -s https://raw.githubusercontent.com/objectbox/objectbox-dart/main/install.sh) --install`
+> pre-requisites: install objectbox library `bash <(curl -s https://raw.githubusercontent.com/objectbox/objectbox-dart/main/install.sh) --quiet`
 - Build verification
 - Automatic branch cleanup post-merge
 - Playstore Deployment
