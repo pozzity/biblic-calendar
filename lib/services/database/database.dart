@@ -13,7 +13,7 @@ class Database extends GetxService {
   /// Constructs a new database.
   Database(this._store);
 
-  static final KEY = const Key("database");
+  static final key = const Key("database");
 
   /// Returns the settings box.
   Box<Settings> get settings => _store.box<Settings>();
