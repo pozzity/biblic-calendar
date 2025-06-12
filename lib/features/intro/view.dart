@@ -43,8 +43,10 @@ class _FirstStepPage extends GetView<IntroController> {
                 left: 0,
                 bottom: 0,
                 child: LanguageView(
-                  onSave: (_) {
+                  onSave: (locale) {
                     controller.hasSelectedLanguage.value = true;
+                    controller.pref
+                        .updatePreferredLanguage(locale.toHashString());
                   },
                 )),
         ],

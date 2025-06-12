@@ -126,3 +126,6 @@ app.*.symbols
 # ObjectBox
 lib/libobjectbox.so
 download/
+
+# Golden screenshots
+test/**/failures/
