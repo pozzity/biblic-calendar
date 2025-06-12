@@ -1,5 +1,5 @@
 {
-  "@@locale": "fr",
+  "@@locale": "fr_FR",
   "home": "Accueil",
   "calendar": "Calendrier",
   "favorites": "Favoris",
@@ -58,8 +58,8 @@
   "module_welcome_content": "Cette application a été conçue pour permettre à \n \t- Toute communauté croyante de créer et de partager des publications avec ses abonnés \n \t- Toute famille pour améliorer la prise de conscience de la parole \n \t- Toute personne pour mieux analyser et partager les écritures St",
   "module_welcome_header": "Bienvenue!",
   "select_preferred_lang": "Veuillez sélectionner votre langue préférée",
-  "french" : "Français",
-  "english" : "Anglais",
+  "fr" : "Français",
+  "en" : "Anglais",
 
   "one_timothy": "1 Timothée",
   "psalms": "Psaumes",

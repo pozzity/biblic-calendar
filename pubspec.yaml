@@ -30,6 +30,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter 
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -38,7 +43,7 @@ dependencies:
   # Contains code to deal with internationalized/localized messages, date and
   # number formatting and parsing, bi-directio`nal text, and other 
   # internationalization issues.
-  intl: 0.20.2
+  intl: 0.19.0
 
   # The package to handle state management.
   get: 4.7.2
@@ -52,7 +57,6 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
@@ -72,6 +76,7 @@ dev_dependencies:
   intl_translation: 0.20.1
   build_runner: 2.4.11
   objectbox_generator: 4.1.0
+  golden_toolkit: 0.15.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

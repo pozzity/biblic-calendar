@@ -57,18 +57,19 @@ class LanguageView extends GetView<IntroController> {
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
+                                  spacing: 5,
                                   children: [
                                     Text(
                                       IntlService.instance.language,
                                       textAlign: TextAlign.left,
-                                      style: Styles.i.tsHeader1
+                                      style: Styles.i.tsHeader
                                           .withValues(color: Colors.white),
                                     ),
                                     Text(
                                       selectedLocale.value.languageCode == "fr"
-                                          ? IntlService.instance.french
-                                          : IntlService.instance.english,
-                                      style: Styles.i.tsBody1.withValues(
+                                          ? IntlService.instance.fr
+                                          : IntlService.instance.en,
+                                      style: Styles.i.tsBody.withValues(
                                           fontStyle: FontStyle.italic,
                                           color: Colors.white),
                                     )
@@ -76,32 +77,33 @@ class LanguageView extends GetView<IntroController> {
                                 ),
                               ),
                             ),
-                            ...IntlService.supportedLocales
-                                .map((locale) => InkWell(
-                                      onTap: () async {
-                                        selectedLocale.value = locale;
-                                        IntlService.instance
-                                            .updateLocale(locale);
-                                      },
-                                      child: Container(
-                                          width: double.infinity,
-                                          decoration: BoxDecoration(
-                                              color: selectedLocale
-                                                          .value.languageCode ==
-                                                      locale.languageCode
-                                                  ? Colors.brown.shade200
-                                                      .withValues(alpha: 0.5)
-                                                  : Colors.brown.shade300
-                                                      .withValues(alpha: 0.7)),
-                                          padding: EdgeInsets.all(10),
-                                          child: Text(
-                                              locale.languageCode == "en"
-                                                  ? IntlService.instance.english
-                                                  : IntlService.instance.french,
-                                              style: Styles.i.tsBody1
-                                                  .withValues(
-                                                      color: Colors.white))),
-                                    ))
+                            ...IntlService.supportedLocales.map(
+                              (locale) => InkWell(
+                                onTap: () async {
+                                  IntlService.instance.updateLocale(locale);
+                                },
+                                child: Container(
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    color: selectedLocale.value.languageCode ==
+                                            locale.languageCode
+                                        ? Colors.brown.shade200
+                                            .withValues(alpha: 0.5)
+                                        : Colors.brown.shade300
+                                            .withValues(alpha: 0.7),
+                                  ),
+                                  padding: EdgeInsets.all(10),
+                                  child: Text(
+                                    locale.languageCode == "en"
+                                        ? IntlService.instance.en
+                                        : IntlService.instance.fr,
+                                    semanticsLabel: locale.languageCode,
+                                    style: Styles.i.tsBody1
+                                        .withValues(color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            )
                           ],
                         ),
                       ),
@@ -133,7 +135,7 @@ class LanguageView extends GetView<IntroController> {
           ),
         ),
       ),
-      IntlService.instance.locale.obs,
+      IntlService.instance.localeRx,
     );
   }
 }

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:biblic_calendar/services/intl/intl.dart';
 import 'package:biblic_calendar/services/preferences/preferences.dart';

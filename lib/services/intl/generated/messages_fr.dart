@@ -14,36 +14,29 @@ import 'package:intl/message_lookup_by_library.dart';
 
 final messages = MessageLookup();
 
-typedef String? MessageIfAbsent(String? messageStr, List<Object>? args);
+typedef String? MessageIfAbsent(
+    String? messageStr, List<Object>? args);
 
 class MessageLookup extends MessageLookupByLibrary {
   @override
   String get localeName => 'fr';
 
   @override
-  final Map<String, dynamic> messages =
-      _notInlinedMessages(_notInlinedMessages);
+  final Map<String, dynamic> messages = _notInlinedMessages(_notInlinedMessages);
 
   static Map<String, dynamic> _notInlinedMessages(_) => {
-        'english': MessageLookupByLibrary.simpleMessage('Anglais'),
-        'french': MessageLookupByLibrary.simpleMessage('Français'),
-        'ignore': MessageLookupByLibrary.simpleMessage('Ignorer'),
-        'language': MessageLookupByLibrary.simpleMessage('Langue'),
-        'module_bible_content': MessageLookupByLibrary.simpleMessage(
-            'Dans le menu «traductions», vous avez la possibilité de télécharger une traduction ou plusieurs traductions selon vos préférences. Vous avez également la possibilité de réaliser un filtre: il est rapide et efficace 😇'),
-        'module_bible_header': MessageLookupByLibrary.simpleMessage(
-            'Un accès libre et gratuit a plusieur traduction!'),
-        'module_calendar_content': MessageLookupByLibrary.simpleMessage(
-            'L\'application propose des versets quotidiens de votre communauté que vous pouvez lire et partager avec vos proches.'),
-        'module_calendar_header':
-            MessageLookupByLibrary.simpleMessage('Lecture quotidienne'),
-        'module_welcome_content': MessageLookupByLibrary.simpleMessage(
-            'Cette application a été conçue pour permettre à \n \t- Toute communauté croyante de créer et de partager des publications avec ses abonnés \n \t- Toute famille pour améliorer la prise de conscience de la parole \n \t- Toute personne pour mieux analyser et partager les écritures St'),
-        'module_welcome_header':
-            MessageLookupByLibrary.simpleMessage('Bienvenue!'),
-        'save': MessageLookupByLibrary.simpleMessage('Enregistrer'),
-        'select_preferred_lang': MessageLookupByLibrary.simpleMessage(
-            'Veuillez sélectionner votre langue préférée'),
-        'start': MessageLookupByLibrary.simpleMessage('Commencer')
-      };
+      'en': MessageLookupByLibrary.simpleMessage('Anglais'),
+    'fr': MessageLookupByLibrary.simpleMessage('Français'),
+    'ignore': MessageLookupByLibrary.simpleMessage('Ignorer'),
+    'language': MessageLookupByLibrary.simpleMessage('Langue'),
+    'module_bible_content': MessageLookupByLibrary.simpleMessage('Dans le menu «traductions», vous avez la possibilité de télécharger une traduction ou plusieurs traductions selon vos préférences. Vous avez également la possibilité de réaliser un filtre: il est rapide et efficace 😇'),
+    'module_bible_header': MessageLookupByLibrary.simpleMessage('Un accès libre et gratuit a plusieur traduction!'),
+    'module_calendar_content': MessageLookupByLibrary.simpleMessage('L\'application propose des versets quotidiens de votre communauté que vous pouvez lire et partager avec vos proches.'),
+    'module_calendar_header': MessageLookupByLibrary.simpleMessage('Lecture quotidienne'),
+    'module_welcome_content': MessageLookupByLibrary.simpleMessage('Cette application a été conçue pour permettre à \n \t- Toute communauté croyante de créer et de partager des publications avec ses abonnés \n \t- Toute famille pour améliorer la prise de conscience de la parole \n \t- Toute personne pour mieux analyser et partager les écritures St'),
+    'module_welcome_header': MessageLookupByLibrary.simpleMessage('Bienvenue!'),
+    'save': MessageLookupByLibrary.simpleMessage('Enregistrer'),
+    'select_preferred_lang': MessageLookupByLibrary.simpleMessage('Veuillez sélectionner votre langue préférée'),
+    'start': MessageLookupByLibrary.simpleMessage('Commencer')
+  };
 }

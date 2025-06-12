@@ -1,5 +1,5 @@
 {
-  "@@locale": "en",
+  "@@locale": "en_US",
   "home": "Home",
   "calendar": "Calendar",
   "favorites": "Favorites",
@@ -58,8 +58,8 @@
   "module_welcome_content": "This application has been designed to allow \n \t- Any believing community to create and share publications with their followers \n \t- Any family to improve awareness of speech \n \t- Any person to better analyze and share the St scriptures",
   "module_welcome_header": "Welcome!",
   "select_preferred_lang": "Please select your preferred language",
-  "french" : "French",
-  "english" : "English",
+  "fr" : "French",
+  "en" : "English",
 
   "one_timothy": "1 Timothy",
   "psalms": "Psalms",
