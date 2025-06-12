@@ -1,6 +1,7 @@
 import 'package:biblic_calendar/l10n/app_localizations.dart';
 import 'package:biblic_calendar/features/intro/view.dart';
 import 'package:biblic_calendar/services/preferences/preferences.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'services/database/database.dart';
@@ -11,10 +12,11 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   debugPrint('isTestMode: $isTestMode');
 
-  final db = await Database.create(isInMemory: isTestMode);
-  Get.put(db);
-  Get.put(IntlService());
-  Get.put(Preference());
+  await Get.putAsync<Database>(() {
+    return Database.create(isInMemory: isTestMode || kDebugMode);
+  });
+  Get.putAsync<IntlService>(IntlService.create);
+  Get.lazyPut<Preference>(() => Preference());
   runApp(const MyApp());
 }
 
@@ -25,29 +27,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Biblic Calendar',
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const IntroView(),
-    );
+        title: 'Biblical Calendar',
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        locale: IntlService.instance.localeRx.value,
+        themeMode: Get.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.brown),
+          useMaterial3: true,
+        ),
+        home: const IntroView());
   }
 }

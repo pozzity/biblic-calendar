@@ -37,7 +37,7 @@ class _FirstStepPage extends GetView<IntroController> {
                       height: screen.height > 390 ? screen.height - 30 : 360,
                       child: showPageView()))),
           if (!controller.hasSelectedLanguage.value)
-            Obx(() => Positioned(
+            Positioned(
                 top: 0,
                 right: 0,
                 left: 0,
@@ -46,7 +46,7 @@ class _FirstStepPage extends GetView<IntroController> {
                   onSave: (_) {
                     controller.hasSelectedLanguage.value = true;
                   },
-                ))),
+                )),
         ],
       ),
     ));

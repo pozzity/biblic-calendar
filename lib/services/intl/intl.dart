@@ -10,53 +10,64 @@ import 'generated/messages_all_locales.dart';
 /// Service for handling internationalization (i18n) in the app.
 class IntlService extends GetxService {
   /// A reactive locale.
-  final _localeRx = supportedLocales[0].obs;
+  final localeRx = supportedLocales[0].obs;
 
   /// The app preferences service.
   Preference get pref => Get.find<Preference>();
 
   /// The locales that the app supports.
-  static const supportedLocales = [Locale('fr', 'CM'), Locale('en', 'CM')];
+  static const supportedLocales = [Locale('fr', 'FR'), Locale('en', 'US')];
 
   /// The instance of the internationalization service.
   static IntlService get instance => Get.find<IntlService>();
 
   /// The current locale.
-  Locale get locale => _localeRx.value;
+  Locale get locale => localeRx.value;
+
+  ///
+  IntlService._() : super() {
+    Intl.defaultLocale = locale.toString();
+  }
+
+  /// Create an instance of the internationalization service.
+  static Future<IntlService> create() async {
+    for (final locale in supportedLocales) {
+      await initializeMessages(locale.languageCode);
+    }
+
+    return IntlService._();
+  }
 
   @override
-  void onInit() {
+  void onInit() async {
+    final locale = _getCurrentLocale();
+    if (locale != null) {
+      updateLocale(locale);
+    }
     super.onInit();
-    _getCurrentLocale();
-    initializeMessages(locale.languageCode);
-    // localeRx.listen((value) {
-    //   initializeMessages(value.languageCode);
-    //   pref.updatePreferredLanguage(value.languageCode);
-    // });
   }
 
   void updateLocale(Locale locale) {
-    _localeRx.value = locale;
-    initializeMessages(locale.languageCode);
-    Intl.defaultLocale = locale.languageCode;
+    Intl.defaultLocale = locale.toString();
+    localeRx.value = locale;
   }
 
-  _getCurrentLocale() {
+  static Locale? _getCurrentLocale() {
     final locale = PlatformDispatcher.instance.locale;
     if (supportedLocales
         .map((e) => e.languageCode)
         .contains(locale.languageCode)) {
-      _localeRx.value = locale;
+      return locale;
     } else {
       for (final locale in PlatformDispatcher.instance.locales) {
         if (supportedLocales
             .map((e) => e.languageCode)
             .contains(locale.languageCode)) {
-          _localeRx.value = locale;
-          break;
+          return locale;
         }
       }
     }
+    return null;
   }
 
   String get start => Intl.message('start');
@@ -70,6 +81,6 @@ class IntlService extends GetxService {
   String get selectPreferredLang => Intl.message('select_preferred_lang');
   String get save => Intl.message('save');
   String get language => Intl.message('language');
-  String get french => Intl.message('french');
-  String get english => Intl.message('english');
+  String get fr => Intl.message('fr');
+  String get en => Intl.message('en');
 }

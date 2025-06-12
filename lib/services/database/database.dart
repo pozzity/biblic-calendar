@@ -20,10 +20,12 @@ class Database extends GetxService {
 
   /// Create an instance of ObjectBox to use throughout the app.
   static Future<Database> create({bool isInMemory = false}) async {
+    if (isInMemory) {
+      return Database(await openStore(directory: "memory:test-db"));
+    }
+
     final docsDir = await getApplicationDocumentsDirectory();
-    final store = await openStore(
-        directory:
-            isInMemory ? "memory:test-db" : p.join(docsDir.path, "bible"));
+    final store = await openStore(directory: p.join(docsDir.path, "bible"));
 
     return Database(store);
   }

@@ -30,6 +30,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter 
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -48,13 +53,10 @@ dependencies:
   objectbox_flutter_libs: any
   path_provider: ^2.1.5
   path: ^1.9.0
-  flutter_localizations:
-    sdk: flutter
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
@@ -74,6 +76,7 @@ dev_dependencies:
   intl_translation: 0.20.1
   build_runner: 2.4.11
   objectbox_generator: 4.1.0
+  golden_toolkit: 0.15.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
