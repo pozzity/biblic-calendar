@@ -69,12 +69,21 @@ jobs:
             echo "files_changed=false" >> $GITHUB_OUTPUT
           fi
 
+      - name: Find the comment to update
+        id: find_comment
+        uses: peter-evans/find-comment@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body-includes: <!-- localization-check -->
+
       - name: Comment on PR if generated files changed
         if: steps.check_diff.outputs.files_changed == 'true'
         uses: peter-evans/create-or-update-comment@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.pull_request.number }}
+          comment-id: ${{ steps.find_comment.outputs.comment-id }}
           body: |
             <!-- localization-check -->
             ❌ **Generated localization files are outdated.**
@@ -83,22 +92,18 @@ jobs:
             ```
             flutter pub run intl_translation:generate_from_arb lib/services/intl/intl.dart i18n/*.arb --output-dir=lib/services/intl/generated
             ```
-
-      - name: Find the comment to delete
+      
+      - name: Update the comment
         if: steps.check_diff.outputs.files_changed == 'false'
-        id: find_comment
-        uses: peter-evans/find-comment@v3
+        # if: steps.find_comment.outputs.comment-id != ''
+        uses: peter-evans/create-or-update-comment@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.pull_request.number }}
-          body-includes: <!-- localization-check -->
-      
-      - name: Delete the comment
-        if: steps.find_comment.outputs.comment-id != ''
-        uses: peter-evans/delete-comment@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           comment-id: ${{ steps.find_comment.outputs.comment-id }}
+          body: |
+            <!-- localization-check -->
+            ✅ **Generated localization files are now up to date.**
 
       - name: Fail if generated files are outdated
         if: steps.check_diff.outputs.files_changed == 'true'
