@@ -56,7 +56,9 @@ jobs:
 
       - name: Run intl_translation generator
         run: flutter pub run intl_translation:generate_from_arb lib/services/intl/intl.dart i18n/*.arb --output-dir=lib/services/intl/generated
-
+      
+      - name: Format the generated files
+        run: dart format .
 
       - name: Check for uncommitted changes in generated files
         id: check_diff
