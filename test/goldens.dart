@@ -1,3 +1,4 @@
+import 'package:biblic_calendar/l10n/app_localizations.dart';
 import 'package:biblic_calendar/services/intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -17,7 +18,7 @@ Future<void> multiScreenMultiLocaleGolden(
   await tester.pumpWidgetBuilder(ObxValue((localeX) {
     return MaterialApp(
       title: 'Biblical Calendar',
-      supportedLocales: IntlService.supportedLocales,
+      supportedLocales: AppLocalizations.supportedLocales,
       locale: localeX.value,
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
@@ -33,7 +34,7 @@ Future<void> multiScreenMultiLocaleGolden(
     );
   }, IntlService.instance.localeRx));
   // Screenshot the widget in each supported locale.
-  for (final locale in IntlService.supportedLocales) {
+  for (final locale in AppLocalizations.supportedLocales) {
     IntlService.instance.updateLocale(locale);
     await tester.pumpAndSettle();
 

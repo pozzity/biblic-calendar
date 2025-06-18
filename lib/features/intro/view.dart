@@ -1,5 +1,5 @@
 import 'package:biblic_calendar/features/intro/widgets/language.dart';
-import 'package:biblic_calendar/services/intl/intl.dart';
+import 'package:biblic_calendar/l10n/app_localizations.dart';
 import 'package:biblic_calendar/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,38 +24,38 @@ class _FirstStepPage extends GetView<IntroController> {
     final screen = MediaQuery.of(context).size;
 
     return Scaffold(
-        body: SafeArea(
-      child: Stack(
-        children: [
-          Positioned(
-              top: 0,
-              right: 0,
-              left: 0,
-              bottom: 0,
-              child: SingleChildScrollView(
-                  child: SizedBox(
-                      height: screen.height > 390 ? screen.height - 30 : 360,
-                      child: showPageView()))),
-          if (!controller.hasSelectedLanguage.value)
-            Positioned(
-                top: 0,
-                right: 0,
-                left: 0,
-                bottom: 0,
-                child: LanguageView(
-                  onSave: (locale) {
-                    controller.hasSelectedLanguage.value = true;
-                    controller.pref
-                        .updatePreferredLanguage(locale.toHashString());
-                  },
-                )),
-        ],
+      body: SafeArea(
+        child: GetBuilder<IntroController>(
+          builder: (controller) {
+            return Stack(
+              children: [
+                Positioned(
+                    top: 0,
+                    right: 0,
+                    left: 0,
+                    bottom: 0,
+                    child: SingleChildScrollView(
+                        child: SizedBox(
+                            height:
+                                screen.height > 390 ? screen.height - 30 : 360,
+                            child: showPageView(context)))),
+                if (!controller.hasSelectedLanguage.value)
+                  Positioned(
+                      top: 0,
+                      right: 0,
+                      left: 0,
+                      bottom: 0,
+                      child: LanguageView(onSave: controller.saveLocale)),
+              ],
+            );
+          },
+        ),
       ),
-    ));
+    );
   }
 
-  Widget showPageView() {
-    final displays = tabDisplays();
+  Widget showPageView(BuildContext context) {
+    final displays = tabDisplays(context);
     return DefaultTabController(
         length: displays.length,
         child: Builder(builder: (BuildContext context) {
@@ -83,7 +83,9 @@ class _FirstStepPage extends GetView<IntroController> {
                         backgroundColor: Colors.brown,
                       ),
                       child: Obx(() => Text(
-                            controller.btText,
+                            controller.isEnd.value
+                                ? AppLocalizations.of(context)!.start
+                                : AppLocalizations.of(context)!.ignore,
                             style: TextStyle(color: Colors.white70),
                           )),
                       onPressed: () {
@@ -102,19 +104,19 @@ class _FirstStepPage extends GetView<IntroController> {
         }));
   }
 
-  List<Widget> tabDisplays() {
+  List<Widget> tabDisplays(BuildContext context) {
     final welcome = Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(bottom: 50.0),
           child: Text(
-            IntlService.instance.moduleWelcomeHeader,
+            AppLocalizations.of(context)!.moduleWelcomeHeader,
             style: Styles.i.tsHeader2,
           ),
         ),
         Text(
-          IntlService.instance.moduleWelcomeContent,
+          AppLocalizations.of(context)!.moduleWelcomeContent,
           style: Styles.i.tsHeader1,
         )
       ],
@@ -125,12 +127,12 @@ class _FirstStepPage extends GetView<IntroController> {
         Padding(
           padding: const EdgeInsets.only(bottom: 50.0),
           child: Text(
-            IntlService.instance.moduleBibleHeader,
+            AppLocalizations.of(context)!.moduleBibleHeader,
             style: Styles.i.tsHeader2,
           ),
         ),
         Text(
-          IntlService.instance.moduleBibleContent,
+          AppLocalizations.of(context)!.moduleBibleContent,
           style: Styles.i.tsHeader1,
         )
       ],
@@ -141,12 +143,12 @@ class _FirstStepPage extends GetView<IntroController> {
         Padding(
           padding: const EdgeInsets.only(bottom: 50.0),
           child: Text(
-            IntlService.instance.moduleCalendarHeader,
+            AppLocalizations.of(context)!.moduleCalendarHeader,
             style: Styles.i.tsHeader2,
           ),
         ),
         Text(
-          IntlService.instance.moduleCalendarContent,
+          AppLocalizations.of(context)!.moduleCalendarContent,
           style: Styles.i.tsHeader1,
         )
       ],

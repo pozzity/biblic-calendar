@@ -1,4 +1,5 @@
 import 'package:biblic_calendar/features/intro/controller.dart';
+import 'package:biblic_calendar/l10n/app_localizations.dart';
 import 'package:biblic_calendar/services/intl/intl.dart';
 import 'package:biblic_calendar/utils/styles.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,6 @@ class LanguageView extends GetView<IntroController> {
   @override
   Widget build(BuildContext context) {
     final screen = MediaQuery.of(context).size;
-
     return ObxValue(
       (selectedLocale) => Container(
         color: Colors.brown.shade50,
@@ -27,7 +27,7 @@ class LanguageView extends GetView<IntroController> {
                   child: Padding(
                     padding: EdgeInsets.only(top: 50, right: 10, left: 10),
                     child: Text(
-                      IntlService.instance.selectPreferredLang,
+                      AppLocalizations.of(context)!.selectPreferredLang,
                       textAlign: TextAlign.center,
                       style: Styles.i.tsHeader2,
                     ),
@@ -60,15 +60,15 @@ class LanguageView extends GetView<IntroController> {
                                   spacing: 5,
                                   children: [
                                     Text(
-                                      IntlService.instance.language,
+                                      AppLocalizations.of(context)!.language,
                                       textAlign: TextAlign.left,
                                       style: Styles.i.tsHeader
                                           .withValues(color: Colors.white),
                                     ),
                                     Text(
                                       selectedLocale.value.languageCode == "fr"
-                                          ? IntlService.instance.fr
-                                          : IntlService.instance.en,
+                                          ? AppLocalizations.of(context)!.fr
+                                          : AppLocalizations.of(context)!.en,
                                       style: Styles.i.tsBody.withValues(
                                           fontStyle: FontStyle.italic,
                                           color: Colors.white),
@@ -77,32 +77,37 @@ class LanguageView extends GetView<IntroController> {
                                 ),
                               ),
                             ),
-                            ...IntlService.supportedLocales.map(
-                              (locale) => InkWell(
-                                onTap: () async {
-                                  IntlService.instance.updateLocale(locale);
-                                },
-                                child: Container(
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    color: selectedLocale.value.languageCode ==
-                                            locale.languageCode
-                                        ? Colors.brown.shade200
-                                            .withValues(alpha: 0.5)
-                                        : Colors.brown.shade300
-                                            .withValues(alpha: 0.7),
+                            ...AppLocalizations.supportedLocales.map(
+                              (locale) {
+                                debugPrint(
+                                    "selectedLocale: ${selectedLocale.value.languageCode}; locale: ${locale.languageCode}");
+                                return InkWell(
+                                  onTap: () async {
+                                    IntlService.instance.updateLocale(locale);
+                                  },
+                                  child: Container(
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      color:
+                                          selectedLocale.value.languageCode ==
+                                                  locale.languageCode
+                                              ? Colors.brown.shade200
+                                                  .withValues(alpha: 0.5)
+                                              : Colors.brown.shade300
+                                                  .withValues(alpha: 0.7),
+                                    ),
+                                    padding: EdgeInsets.all(10),
+                                    child: Text(
+                                      locale.languageCode == "en"
+                                          ? AppLocalizations.of(context)!.en
+                                          : AppLocalizations.of(context)!.fr,
+                                      semanticsLabel: locale.languageCode,
+                                      style: Styles.i.tsBody1
+                                          .withValues(color: Colors.white),
+                                    ),
                                   ),
-                                  padding: EdgeInsets.all(10),
-                                  child: Text(
-                                    locale.languageCode == "en"
-                                        ? IntlService.instance.en
-                                        : IntlService.instance.fr,
-                                    semanticsLabel: locale.languageCode,
-                                    style: Styles.i.tsBody1
-                                        .withValues(color: Colors.white),
-                                  ),
-                                ),
-                              ),
+                                );
+                              },
                             )
                           ],
                         ),
@@ -124,7 +129,7 @@ class LanguageView extends GetView<IntroController> {
                             color: Colors.brown,
                           ),
                           label: Text(
-                            IntlService.instance.save,
+                            AppLocalizations.of(context)!.save,
                             style: Styles.i.tsHeader,
                           ))
                     ],

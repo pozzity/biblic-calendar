@@ -1,4 +1,5 @@
 import 'package:biblic_calendar/features/intro/controller.dart';
+import 'package:biblic_calendar/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -37,29 +38,28 @@ Future<void> main() async {
 
   group('LanguageView', () {
     testWidgets('display properly', (WidgetTester tester) async {
-      Get.find<IntlService>().updateLocale(IntlService.supportedLocales[0]);
+      final locale = AppLocalizations.supportedLocales[0];
+      final localization = await AppLocalizations.delegate.load(locale);
+      Get.find<IntlService>().updateLocale(locale);
       // Build our app and trigger a frame.
       await tester.pumpWidget(languageWidgetWrapper());
       await tester.pumpAndSettle();
 
-      debugPrint(
-          "IntlService.instance.selectPreferredLang: ${IntlService.instance.selectPreferredLang}");
-
       // Verify that selectPreferredLang is displayed.
-      expect(
-          find.text(IntlService.instance.selectPreferredLang), findsOneWidget);
+      expect(find.text(localization.selectPreferredLang), findsOneWidget);
       // Verify that language is displayed.
-      expect(find.text(IntlService.instance.language), findsOneWidget);
+      expect(find.text(localization.language), findsOneWidget);
       // Verify that save is displayed.
-      expect(find.text(IntlService.instance.save), findsOneWidget);
+      expect(find.text(localization.save), findsOneWidget);
     });
     testWidgets('save properly', (WidgetTester tester) async {
-      Get.find<IntlService>().updateLocale(IntlService.supportedLocales[0]);
+      Get.find<IntlService>()
+          .updateLocale(AppLocalizations.supportedLocales[0]);
       // Build our app and trigger a frame.
       await tester.pumpWidget(languageWidgetWrapper());
       await tester.pumpAndSettle();
       // expect(IntlService.instance.save, 'Save');
-      await _selectLocaleAndSave(IntlService.supportedLocales[1], tester);
+      await _selectLocaleAndSave(AppLocalizations.supportedLocales[1], tester);
       // Verify that the language is saved.
       expect(Get.find<Preference>().settings.preferredLanguage, 'fr_FR');
     });
@@ -69,7 +69,7 @@ Future<void> main() async {
 _selectLocaleAndSave(Locale locale, WidgetTester tester) async {
   await tester.tap(find.bySemanticsLabel(locale.languageCode));
   await tester.pumpAndSettle();
-  expect(IntlService.instance.save, 'Enregistrer');
-  await tester.tap(find.text(IntlService.instance.save));
+  final localization = await AppLocalizations.delegate.load(locale);
+  await tester.tap(find.text(localization.save));
   await tester.pumpAndSettle();
 }

@@ -2,5 +2,57 @@
     "welcome": "Bienvenue dans Calendrier Biblique!",
     "@welcome": {
     "description": "Organises ta Bible."
+    },
+    "start" : "Commencer",
+    "@start": {
+    "description": "Start the app."
+    },
+    "ignore" : "Ignorer",
+    "@ignore": {
+    "description": "Ignore the app."
+    },
+    "moduleWelcomeHeader": "Bienvenue!",
+    "@moduleWelcomeHeader": {
+    "description": "Welcome header."
+    },
+    "moduleWelcomeContent": "Cette application a été conçue pour permettre \n \t- Toute communauté croyante à créer et partager des publications avec leurs fidèles \n \t- Toute famille à améliorer la conscience du langage \n \t- Toute personne à mieux analyser et partager les Écritures",
+    "@moduleWelcomeContent": {
+    "description": "Welcome content."
+    },
+    "moduleBibleHeader": "Accès gratuit à plusieurs traductions!",
+    "@moduleBibleHeader": {
+    "description": "Bible header."
+    },
+    "moduleBibleContent": "Dans le menu «traductions», vous avez la possibilité de télécharger une traduction ou plusieurs traductions selon vos préférences. Vous avez également la possibilité de faire un filtre: c'est rapide et efficace \uD83D\uDE07",
+    "@moduleBibleContent": {
+    "description": "Bible content."
+    },
+    "moduleCalendarHeader": "Lecture quotidienne",
+    "@moduleCalendarHeader": {
+    "description": "Calendar header."
+    },
+    "moduleCalendarContent": "L'application offre des versets quotidiens de votre communauté que vous pouvez lire et partager avec vos proches.",
+    "@moduleCalendarContent": {
+    "description": "Calendar content."
+    },
+    "selectPreferredLang": "Veuillez sélectionner votre langue préférée",
+    "@selectPreferredLang": {
+    "description": "Select preferred language."
+    },
+    "fr" : "Français",
+    "@fr": {
+    "description": "French."
+    },
+    "en" : "Anglais",
+    "@en": {
+    "description": "English."
+    },
+    "language": "Langue",
+    "@language": {
+    "description": "Language."
+    },
+    "save": "Sauvegarder",
+    "@save": {
+    "description": "Save."
     }
 }

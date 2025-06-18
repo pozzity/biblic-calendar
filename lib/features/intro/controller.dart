@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:get/get.dart';
 import 'package:biblic_calendar/services/intl/intl.dart';
 import 'package:biblic_calendar/services/preferences/preferences.dart';
@@ -5,9 +7,6 @@ import 'package:biblic_calendar/services/preferences/preferences.dart';
 class IntroController extends GetxController {
   /// True if the user has reached the end of the slides.
   final isEnd = false.obs;
-
-  String get btText =>
-      isEnd.value ? IntlService.instance.start : IntlService.instance.ignore;
 
   /// The selected language.
   final hasSelectedLanguage = false.obs;
@@ -18,11 +17,16 @@ class IntroController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    IntlService.instance.updateLocale(
-        LocaleHash.fromHashString(pref.settings.preferredLanguage));
+    IntlService.instance.updateLocale(Locale(pref.settings.preferredLanguage));
     if (!pref.isFirstSetup) {
       // goToHome();
     }
+  }
+
+  void saveLocale(Locale locale) {
+    hasSelectedLanguage.value = true;
+    pref.updatePreferredLanguage(locale.languageCode);
+    update();
   }
 
   // void goToHome() => Navigator.of(Get.context!)

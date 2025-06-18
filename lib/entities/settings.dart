@@ -14,7 +14,7 @@ class Settings {
   Settings({
     required this.id,
     this.isFirstStepCompleted = false,
-    this.preferredLanguage = "fr_FR",
+    this.preferredLanguage = "fr",
   });
 
   Settings copyWith({
