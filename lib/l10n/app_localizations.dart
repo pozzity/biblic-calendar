@@ -103,6 +103,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Welcome in Biblic Calendar!'**
   String get welcome;
+
+  /// Start the app.
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get start;
+
+  /// Ignore the app.
+  ///
+  /// In en, this message translates to:
+  /// **'Ignore'**
+  String get ignore;
+
+  /// Welcome header.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome!'**
+  String get moduleWelcomeHeader;
+
+  /// Welcome content.
+  ///
+  /// In en, this message translates to:
+  /// **'This application has been designed to allow \n \t- Any believing community to create and share publications with their followers \n \t- Any family to improve awareness of speech \n \t- Any person to better analyze and share the St scriptures'**
+  String get moduleWelcomeContent;
+
+  /// Bible header.
+  ///
+  /// In en, this message translates to:
+  /// **'Free access to several translations!'**
+  String get moduleBibleHeader;
+
+  /// Bible content.
+  ///
+  /// In en, this message translates to:
+  /// **'In the «translations» menu, you have the possibility of downloading a translation or several translations according to your preferences. You also have the possibility of making a filter: it is fast and efficient 😇'**
+  String get moduleBibleContent;
+
+  /// Calendar header.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily reading'**
+  String get moduleCalendarHeader;
+
+  /// Calendar content.
+  ///
+  /// In en, this message translates to:
+  /// **'The application offers daily verses from your community that you can read and share with your loved ones.'**
+  String get moduleCalendarContent;
+
+  /// Select preferred language.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select your preferred language'**
+  String get selectPreferredLang;
+
+  /// French.
+  ///
+  /// In en, this message translates to:
+  /// **'French'**
+  String get fr;
+
+  /// English.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get en;
+
+  /// Language.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// Save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
 }
 
 class _AppLocalizationsDelegate

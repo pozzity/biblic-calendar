@@ -2,5 +2,57 @@
     "welcome": "Welcome in Biblic Calendar!",
     "@welcome": {
     "description": "Organise your Bible."
+    },
+    "start" : "Start",
+    "@start": {
+    "description": "Start the app."
+    },
+    "ignore" : "Ignore",
+    "@ignore": {
+    "description": "Ignore the app."
+    },
+    "moduleWelcomeHeader": "Welcome!",
+    "@moduleWelcomeHeader": {
+    "description": "Welcome header."
+    },
+    "moduleWelcomeContent": "This application has been designed to allow \n \t- Any believing community to create and share publications with their followers \n \t- Any family to improve awareness of speech \n \t- Any person to better analyze and share the St scriptures",
+    "@moduleWelcomeContent": {
+    "description": "Welcome content."
+    },
+    "moduleBibleHeader": "Free access to several translations!",
+    "@moduleBibleHeader": {
+    "description": "Bible header."
+    },
+    "moduleBibleContent": "In the «translations» menu, you have the possibility of downloading a translation or several translations according to your preferences. You also have the possibility of making a filter: it is fast and efficient \uD83D\uDE07",
+    "@moduleBibleContent": {
+    "description": "Bible content."
+    },
+    "moduleCalendarHeader": "Daily reading",
+    "@moduleCalendarHeader": {
+    "description": "Calendar header."
+    },
+    "moduleCalendarContent": "The application offers daily verses from your community that you can read and share with your loved ones.",
+    "@moduleCalendarContent": {
+    "description": "Calendar content."
+    },
+    "selectPreferredLang": "Please select your preferred language",
+    "@selectPreferredLang": {
+    "description": "Select preferred language."
+    },
+    "fr" : "French",
+    "@fr": {
+    "description": "French."
+    },
+    "en" : "English",
+    "@en": {
+    "description": "English."
+    },
+    "language": "Language",
+    "@language": {
+    "description": "Language."
+    },
+    "save": "Save",
+    "@save": {
+    "description": "Save."
     }
 }
