@@ -51,7 +51,7 @@
     "@language": {
     "description": "Language."
     },
-    "save": "Sauvegarder",
+    "save": "Enregistrer",
     "@save": {
     "description": "Save."
     }

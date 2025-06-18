@@ -79,8 +79,6 @@ class LanguageView extends GetView<IntroController> {
                             ),
                             ...AppLocalizations.supportedLocales.map(
                               (locale) {
-                                debugPrint(
-                                    "selectedLocale: ${selectedLocale.value.languageCode}; locale: ${locale.languageCode}");
                                 return InkWell(
                                   onTap: () async {
                                     IntlService.instance.updateLocale(locale);

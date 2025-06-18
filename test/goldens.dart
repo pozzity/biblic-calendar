@@ -1,7 +1,6 @@
 import 'package:biblic_calendar/l10n/app_localizations.dart';
 import 'package:biblic_calendar/services/intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:golden_toolkit/golden_toolkit.dart';
@@ -20,11 +19,7 @@ Future<void> multiScreenMultiLocaleGolden(
       title: 'Biblical Calendar',
       supportedLocales: AppLocalizations.supportedLocales,
       locale: localeX.value,
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
       themeMode: Get.isDarkMode ? ThemeMode.dark : ThemeMode.light,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.brown),

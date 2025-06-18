@@ -9,17 +9,29 @@ import 'package:biblic_calendar/services/intl/intl.dart';
 import 'package:biblic_calendar/services/preferences/preferences.dart';
 import 'package:biblic_calendar/services/database/database.dart';
 
-Widget languageWidgetWrapper() => Directionality(
-    textDirection: TextDirection.ltr,
-    child: Scaffold(
-        body: Stack(children: [
-      Positioned(
-          top: 0,
-          right: 0,
-          left: 0,
-          bottom: 0,
-          child: LanguageView(onSave: (_) {})),
-    ])));
+Widget languageWidgetWrapper() => ObxValue(
+    (localeX) => MaterialApp(
+        title: 'Biblical Calendar',
+        supportedLocales: AppLocalizations.supportedLocales,
+        locale: localeX.value,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.brown),
+          useMaterial3: true,
+        ),
+        home: Scaffold(
+            body: Stack(children: [
+          Positioned(
+              top: 0,
+              right: 0,
+              left: 0,
+              bottom: 0,
+              child: LanguageView(onSave: (locale) {
+                Get.find<Preference>()
+                    .updatePreferredLanguage(locale.languageCode);
+              })),
+        ]))),
+    IntlService.instance.localeRx);
 
 Future<void> setupAll() async {
   await Get.putAsync(() => Database.create(isInMemory: true));
@@ -61,7 +73,10 @@ Future<void> main() async {
       // expect(IntlService.instance.save, 'Save');
       await _selectLocaleAndSave(AppLocalizations.supportedLocales[1], tester);
       // Verify that the language is saved.
-      expect(Get.find<Preference>().settings.preferredLanguage, 'fr_FR');
+      expect(
+        Get.find<Preference>().settings.preferredLanguage,
+        AppLocalizations.supportedLocales[1].languageCode,
+      );
     });
   });
 }
@@ -70,6 +85,8 @@ _selectLocaleAndSave(Locale locale, WidgetTester tester) async {
   await tester.tap(find.bySemanticsLabel(locale.languageCode));
   await tester.pumpAndSettle();
   final localization = await AppLocalizations.delegate.load(locale);
+  debugPrint(
+      "locale: ${locale.languageCode}; localization: ${localization.save}");
   await tester.tap(find.text(localization.save));
   await tester.pumpAndSettle();
 }

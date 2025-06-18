@@ -8,7 +8,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  FLUTTER_SDK_VERSION: 3.27.2
+  FLUTTER_SDK_VERSION: 3.32.4
 
 jobs:
   dart-format:
@@ -42,7 +42,7 @@ jobs:
       - run: flutter pub run dart_code_linter:metrics analyze lib --reporter=github
 
   intl-check:
-    if: false
+    if: false 
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
