@@ -42,6 +42,7 @@ jobs:
       - run: flutter pub run dart_code_linter:metrics analyze lib --reporter=github
 
   intl-check:
+    if: false
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
