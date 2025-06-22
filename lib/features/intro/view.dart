@@ -29,23 +29,16 @@ class _FirstStepPage extends GetView<IntroController> {
           builder: (controller) {
             return Stack(
               children: [
-                Positioned(
-                    top: 0,
-                    right: 0,
-                    left: 0,
-                    bottom: 0,
-                    child: SingleChildScrollView(
-                        child: SizedBox(
-                            height:
-                                screen.height > 390 ? screen.height - 30 : 360,
-                            child: showPageView(context)))),
+                Positioned.fill(
+                  child: SizedBox(
+                    height: screen.height > 390 ? screen.height - 30 : 360,
+                    child: showPageView(context),
+                  ),
+                ),
                 if (!controller.hasSelectedLanguage.value)
-                  Positioned(
-                      top: 0,
-                      right: 0,
-                      left: 0,
-                      bottom: 0,
-                      child: LanguageView(onSave: controller.saveLocale)),
+                  Positioned.fill(
+                    child: LanguageView(onSave: controller.saveLocale),
+                  ),
               ],
             );
           },
@@ -57,8 +50,9 @@ class _FirstStepPage extends GetView<IntroController> {
   Widget showPageView(BuildContext context) {
     final displays = tabDisplays(context);
     return DefaultTabController(
-        length: displays.length,
-        child: Builder(builder: (BuildContext context) {
+      length: displays.length,
+      child: Builder(
+        builder: (BuildContext context) {
           final defaultCtrl = DefaultTabController.of(context);
           defaultCtrl.addListener(() {
             if (defaultCtrl.index == displays.length - 1 &&
@@ -72,36 +66,45 @@ class _FirstStepPage extends GetView<IntroController> {
               return;
             }
           });
-          return Column(children: <Widget>[
-            Expanded(child: TabBarView(children: displays)),
-            Row(
+          return Column(
+            children: <Widget>[
+              Expanded(child: TabBarView(children: displays)),
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   TabPageSelector(),
                   ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.brown,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.brown,
+                    ),
+                    child: Obx(
+                      () => Text(
+                        controller.isEnd.value
+                            ? AppLocalizations.of(context)!.start
+                            : AppLocalizations.of(context)!.ignore,
+                        style: TextStyle(color: Colors.white70),
                       ),
-                      child: Obx(() => Text(
-                            controller.isEnd.value
-                                ? AppLocalizations.of(context)!.start
-                                : AppLocalizations.of(context)!.ignore,
-                            style: TextStyle(color: Colors.white70),
-                          )),
-                      onPressed: () {
-                        final TabController ctrl =
-                            DefaultTabController.of(context);
-                        if (ctrl.index == displays.length - 1) {
-                          controller.hasSelectedLanguage.value = true;
-                        }
+                    ),
+                    onPressed: () {
+                      final TabController ctrl = DefaultTabController.of(
+                        context,
+                      );
+                      if (ctrl.index == displays.length - 1) {
+                        controller.hasSelectedLanguage.value = true;
+                      }
 
-                        if (!ctrl.indexIsChanging) {
-                          ctrl.animateTo(displays.length - 1);
-                        }
-                      })
-                ])
-          ]);
-        }));
+                      if (!ctrl.indexIsChanging) {
+                        ctrl.animateTo(displays.length - 1);
+                      }
+                    },
+                  ),
+                ],
+              ),
+            ],
+          );
+        },
+      ),
+    );
   }
 
   List<Widget> tabDisplays(BuildContext context) {
@@ -118,7 +121,7 @@ class _FirstStepPage extends GetView<IntroController> {
         Text(
           AppLocalizations.of(context)!.moduleWelcomeContent,
           style: Styles.i.tsHeader1,
-        )
+        ),
       ],
     );
     final moduleBile = Column(
@@ -134,7 +137,7 @@ class _FirstStepPage extends GetView<IntroController> {
         Text(
           AppLocalizations.of(context)!.moduleBibleContent,
           style: Styles.i.tsHeader1,
-        )
+        ),
       ],
     );
     final moduleCalendar = Column(
@@ -150,13 +153,13 @@ class _FirstStepPage extends GetView<IntroController> {
         Text(
           AppLocalizations.of(context)!.moduleCalendarContent,
           style: Styles.i.tsHeader1,
-        )
+        ),
       ],
     );
     p(Widget wg) => Padding(
-          padding: EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
-          child: wg,
-        );
+      padding: EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
+      child: wg,
+    );
     return <Widget>[p(welcome), p(moduleBile), p(moduleCalendar)];
   }
 }

@@ -10,28 +10,37 @@ import 'package:biblic_calendar/services/preferences/preferences.dart';
 import 'package:biblic_calendar/services/database/database.dart';
 
 Widget languageWidgetWrapper() => ObxValue(
-    (localeX) => MaterialApp(
-        title: 'Biblical Calendar',
-        supportedLocales: AppLocalizations.supportedLocales,
-        locale: localeX.value,
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.brown),
-          useMaterial3: true,
-        ),
-        home: Scaffold(
-            body: Stack(children: [
+  (localeX) => MaterialApp(
+    title: 'Biblical Calendar',
+    supportedLocales: AppLocalizations.supportedLocales,
+    locale: localeX.value,
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    theme: ThemeData(
+      colorScheme: ColorScheme.fromSeed(seedColor: Colors.brown),
+      useMaterial3: true,
+    ),
+    home: Scaffold(
+      body: Stack(
+        children: [
           Positioned(
-              top: 0,
-              right: 0,
-              left: 0,
-              bottom: 0,
-              child: LanguageView(onSave: (locale) {
-                Get.find<Preference>()
-                    .updatePreferredLanguage(locale.languageCode);
-              })),
-        ]))),
-    IntlService.instance.localeRx);
+            top: 0,
+            right: 0,
+            left: 0,
+            bottom: 0,
+            child: LanguageView(
+              onSave: (locale) {
+                Get.find<Preference>().updatePreferredLanguage(
+                  locale.languageCode,
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    ),
+  ),
+  IntlService.instance.localeRx,
+);
 
 Future<void> setupAll() async {
   await Get.putAsync(() => Database.create(isInMemory: true));
@@ -65,8 +74,9 @@ Future<void> main() async {
       expect(find.text(localization.save), findsOneWidget);
     });
     testWidgets('save properly', (WidgetTester tester) async {
-      Get.find<IntlService>()
-          .updateLocale(AppLocalizations.supportedLocales[0]);
+      Get.find<IntlService>().updateLocale(
+        AppLocalizations.supportedLocales[0],
+      );
       // Build our app and trigger a frame.
       await tester.pumpWidget(languageWidgetWrapper());
       await tester.pumpAndSettle();
@@ -81,12 +91,13 @@ Future<void> main() async {
   });
 }
 
-_selectLocaleAndSave(Locale locale, WidgetTester tester) async {
+Future<void> _selectLocaleAndSave(Locale locale, WidgetTester tester) async {
   await tester.tap(find.bySemanticsLabel(locale.languageCode));
   await tester.pumpAndSettle();
   final localization = await AppLocalizations.delegate.load(locale);
   debugPrint(
-      "locale: ${locale.languageCode}; localization: ${localization.save}");
+    "locale: ${locale.languageCode}; localization: ${localization.save}",
+  );
   await tester.tap(find.text(localization.save));
   await tester.pumpAndSettle();
 }
