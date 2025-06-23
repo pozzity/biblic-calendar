@@ -52,4 +52,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get save => 'Save';
+
+  @override
+  String get sideMenuTitle => 'Menu';
+
+  @override
+  String get biblicalCalendar => 'Biblical Calendar';
+
+  @override
+  String get translations => 'Translations';
+
+  @override
+  String get reader => 'Reader';
+
+  @override
+  String get favorites => 'Favorites';
+
+  @override
+  String get settings => 'Settings';
+
+  @override
+  String get about => 'About';
+
+  @override
+  String get contact => 'Contact';
+
+  @override
+  String get privacyPolicy => 'Privacy Policy';
 }
