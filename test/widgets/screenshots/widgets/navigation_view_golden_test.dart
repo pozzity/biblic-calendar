@@ -1,5 +1,5 @@
 // Test golden screenshots for test/widgets/screenshots/widgets/navigation_view_test.dart
-import 'package:biblic_calendar/features/navigation_bar/view.dart';
+import 'package:biblic_calendar/features/navigation/view.dart';
 import 'package:biblic_calendar/l10n/app_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:golden_toolkit/golden_toolkit.dart';
