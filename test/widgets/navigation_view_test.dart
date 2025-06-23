@@ -1,19 +1,27 @@
 import 'package:biblic_calendar/features/navigation_bar/view.dart';
 import 'package:biblic_calendar/l10n/app_localizations.dart';
+import 'package:biblic_calendar/services/database/database.dart';
+import 'package:biblic_calendar/services/preferences/preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get/get.dart';
+import 'package:biblic_calendar/services/intl/intl.dart';
+
+Widget wrapWithMaterialApp(Widget child, {Locale? locale}) {
+  return MaterialApp(
+    locale: locale,
+    supportedLocales: AppLocalizations.supportedLocales,
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    home: child,
+  );
+}
+
+Future<void> setupEach() async {
+  await Get.putAsync(IntlService.create);
+}
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-
-  Widget wrapWithMaterialApp(Widget child, {Locale? locale}) {
-    return MaterialApp(
-      locale: locale,
-      supportedLocales: AppLocalizations.supportedLocales,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      home: child,
-    );
-  }
 
   group('NavigationView', () {
     testWidgets('displays app bar title and bottom navigation items', (
