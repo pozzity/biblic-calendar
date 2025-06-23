@@ -1,4 +1,5 @@
 import 'package:biblic_calendar/features/intro/widgets/language.dart';
+import 'package:biblic_calendar/features/navigation_bar/view.dart';
 import 'package:biblic_calendar/l10n/app_localizations.dart';
 import 'package:biblic_calendar/utils/styles.dart';
 import 'package:flutter/material.dart';
@@ -91,6 +92,12 @@ class _FirstStepPage extends GetView<IntroController> {
                       );
                       if (ctrl.index == displays.length - 1) {
                         controller.hasSelectedLanguage.value = true;
+                        // Navigate to the next screen
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const NavigationView(),
+                          ),
+                        );
                       }
 
                       if (!ctrl.indexIsChanging) {
