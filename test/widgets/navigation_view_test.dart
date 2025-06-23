@@ -1,7 +1,5 @@
 import 'package:biblic_calendar/features/navigation/view.dart';
 import 'package:biblic_calendar/l10n/app_localizations.dart';
-import 'package:biblic_calendar/services/database/database.dart';
-import 'package:biblic_calendar/services/preferences/preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
