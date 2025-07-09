@@ -27,18 +27,19 @@ class MyApp extends GetView<IntlService> {
   @override
   Widget build(BuildContext context) {
     return ObxValue(
-        (localeRx) => MaterialApp(
-              title: 'Biblical Calendar',
-              localizationsDelegates: AppLocalizations.localizationsDelegates,
-              supportedLocales: AppLocalizations.supportedLocales,
-              locale: localeRx.value,
-              themeMode: Get.isDarkMode ? ThemeMode.dark : ThemeMode.light,
-              theme: ThemeData(
-                colorScheme: ColorScheme.fromSeed(seedColor: Colors.brown),
-                useMaterial3: true,
-              ),
-              home: const IntroView(),
-            ),
-        IntlService.instance.localeRx);
+      (localeRx) => MaterialApp(
+        title: 'Biblical Calendar',
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        locale: localeRx.value,
+        themeMode: Get.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.brown),
+          useMaterial3: true,
+        ),
+        home: const IntroView(),
+      ),
+      IntlService.instance.localeRx,
+    );
   }
 }
