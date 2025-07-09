@@ -15,9 +15,6 @@ class MockIntlService extends IntlService {
   MockIntlService() : super.localeLang();
 
   @override
-  Rx<Locale> get localeRx => super.localeRx;
-
-  @override
   Locale get locale => localeRx.value;
 
   @override
