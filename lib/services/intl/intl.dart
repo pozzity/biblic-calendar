@@ -21,7 +21,7 @@ class IntlService extends GetxService {
   Locale get locale => localeRx.value;
 
   ///
-  IntlService._() : super() {
+  IntlService.localeLang() : super() {
     Intl.defaultLocale = locale.languageCode;
   }
 
@@ -31,7 +31,7 @@ class IntlService extends GetxService {
       await AppLocalizations.delegate.load(locale);
     }
 
-    return IntlService._();
+    return IntlService.localeLang();
   }
 
   @override

@@ -1,5 +1,7 @@
+import 'package:biblic_calendar/entities/settings.dart';
 import 'package:biblic_calendar/features/intro/controller.dart';
 import 'package:biblic_calendar/l10n/app_localizations.dart';
+import 'package:biblic_calendar/objectbox.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -8,6 +10,58 @@ import 'package:get/get.dart';
 import 'package:biblic_calendar/services/intl/intl.dart';
 import 'package:biblic_calendar/services/preferences/preferences.dart';
 import 'package:biblic_calendar/services/database/database.dart';
+
+class MockIntlService extends IntlService {
+  MockIntlService() : super.localeLang();
+
+  @override
+  final Rx<Locale> localeRx = Rx<Locale>(const Locale('en'));
+
+  @override
+  Locale get locale => localeRx.value;
+
+  @override
+  void updateLocale(Locale locale) {
+    localeRx.value = locale;
+  }
+}
+
+class MockDatabase extends GetxService implements Database {
+  final _settingsBox = MockSettingsBox();
+
+  @override
+  Box<Settings> get settings => _settingsBox;
+
+  @override
+  Future<void> onInit() async {}
+}
+
+class MockSettingsBox implements Box<Settings> {
+  final Map<int, Settings> _store = {};
+
+  @override
+  Settings? get(int id, {Settings? defaultValue}) => _store[id] ?? defaultValue;
+
+  @override
+  int put(Settings object, {PutMode mode = PutMode.insert}) {
+    final id = object.id ?? _store.length + 1;
+    object.id = id;
+    _store[id] = object;
+    return id;
+  }
+
+  @override
+  List<Settings> getAll({int? offset, int? limit}) {
+    var values = _store.values.toList();
+    if (offset != null) values = values.skip(offset).toList();
+    if (limit != null) values = values.take(limit).toList();
+    return values;
+  }
+
+  // Implement other required members with noSuchMethod for unused ones:
+  @override
+  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
 
 Widget languageWidgetWrapper() => ObxValue(
   (localeX) => MaterialApp(
@@ -48,6 +102,9 @@ Future<void> setupAll({bool skipDb = false}) async {
   skipDatabase = skipDb;
   if (!skipDatabase) {
     await Get.putAsync(() => Database.create(isInMemory: true));
+  } else {
+    Get.put<Database>(MockDatabase());
+    Get.put<IntlService>(MockIntlService());
   }
   Get.put(Preference());
   Get.put(IntroController());
@@ -57,40 +114,43 @@ Future<void> setupEach({bool skipDb = false}) async {
   skipDatabase = skipDb;
   if (!skipDatabase) {
     await Get.putAsync(IntlService.create);
+  } else {
+    Get.replace<Database>(MockDatabase());
+    Get.replace<IntlService>(
+      MockIntlService() as dynamic,
+    ); // <-- Register as dynamic
   }
 }
 
-Future<void> main() async {
+void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  await setupAll();
-  await setupEach();
+
+  setUpAll(() async {
+    await setupAll(skipDb: true); // Always skip DB for tests
+  });
+
+  setUp(() async {
+    await setupEach(skipDb: true);
+  });
 
   group('LanguageView', () {
     testWidgets('display properly', (WidgetTester tester) async {
       final locale = AppLocalizations.supportedLocales[0];
       final localization = await AppLocalizations.delegate.load(locale);
       Get.find<IntlService>().updateLocale(locale);
-      // Build our app and trigger a frame.
       await tester.pumpWidget(languageWidgetWrapper());
       await tester.pumpAndSettle();
-
-      // Verify that selectPreferredLang is displayed.
       expect(find.text(localization.selectPreferredLang), findsOneWidget);
-      // Verify that language is displayed.
       expect(find.text(localization.language), findsOneWidget);
-      // Verify that save is displayed.
       expect(find.text(localization.save), findsOneWidget);
     });
     testWidgets('save properly', (WidgetTester tester) async {
       Get.find<IntlService>().updateLocale(
         AppLocalizations.supportedLocales[0],
       );
-      // Build our app and trigger a frame.
       await tester.pumpWidget(languageWidgetWrapper());
       await tester.pumpAndSettle();
-      // expect(IntlService.instance.save, 'Save');
       await _selectLocaleAndSave(AppLocalizations.supportedLocales[1], tester);
-      // Verify that the language is saved.
       expect(
         Get.find<Preference>().settings.preferredLanguage,
         AppLocalizations.supportedLocales[1].languageCode,
