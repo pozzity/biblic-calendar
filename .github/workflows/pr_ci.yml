@@ -163,13 +163,13 @@ jobs:
           flutter-version: ${{ env.FLUTTER_SDK_VERSION }}
           cache: true
 
-      # Generate golden screenshots.
-      - run: flutter test --update-goldens --tags=golden
-
       # Download object-box library
       - name: Download object-box library
         shell: bash
         run: bash <(curl -s https://raw.githubusercontent.com/objectbox/objectbox-dart/main/install.sh) --quiet
+        
+      # Generate golden screenshots.
+      - run: flutter test --update-goldens --tags=golden
 
 
       # Store the golden images as artifacts.
