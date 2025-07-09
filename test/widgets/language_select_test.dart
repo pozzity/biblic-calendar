@@ -42,14 +42,22 @@ Widget languageWidgetWrapper() => ObxValue(
   IntlService.instance.localeRx,
 );
 
-Future<void> setupAll() async {
-  await Get.putAsync(() => Database.create(isInMemory: true));
+bool skipDatabase = false;
+
+Future<void> setupAll({bool skipDb = false}) async {
+  skipDatabase = skipDb;
+  if (!skipDatabase) {
+    await Get.putAsync(() => Database.create(isInMemory: true));
+  }
   Get.put(Preference());
   Get.put(IntroController());
 }
 
-Future<void> setupEach() async {
-  await Get.putAsync(IntlService.create);
+Future<void> setupEach({bool skipDb = false}) async {
+  skipDatabase = skipDb;
+  if (!skipDatabase) {
+    await Get.putAsync(IntlService.create);
+  }
 }
 
 Future<void> main() async {
