@@ -14,7 +14,8 @@ import 'package:biblic_calendar/services/database/database.dart';
 class MockIntlService extends IntlService {
   MockIntlService() : super.localeLang();
 
-  final Rx<Locale> localeRx = Rx<Locale>(const Locale('en'));
+  @override
+  Rx<Locale> get localeRx => super.localeRx;
 
   @override
   Locale get locale => localeRx.value;
@@ -30,8 +31,6 @@ class MockDatabase extends GetxService implements Database {
 
   @override
   Box<Settings> get settings => _settingsBox;
-
-  @override
   Future<void> init() async {}
 }
 
