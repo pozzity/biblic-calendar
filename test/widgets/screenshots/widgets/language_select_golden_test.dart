@@ -7,11 +7,11 @@ import '../../language_select_test.dart' as language_select_test;
 void main() {
   group('Goldens', () {
     setUpAll(() async {
-      await language_select_test.setupAll();
+      await language_select_test.setupAll(skipDb: true); // <-- skip DB
     });
 
     setUp(() async {
-      await language_select_test.setupEach();
+      await language_select_test.setupEach(skipDb: true); // <-- skip DB
     });
     testGoldens('LanguageView', (tester) async {
       await multiScreenMultiLocaleGolden(

@@ -53,4 +53,31 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get save => 'Enregistrer';
+
+  @override
+  String get sideMenuTitle => 'Menu';
+
+  @override
+  String get biblicalCalendar => 'Calendrier Biblique';
+
+  @override
+  String get translations => 'Traductions';
+
+  @override
+  String get reader => 'Lecteur';
+
+  @override
+  String get favorites => 'Favoris';
+
+  @override
+  String get settings => 'Paramètres';
+
+  @override
+  String get about => 'À propos';
+
+  @override
+  String get contact => 'Contact';
+
+  @override
+  String get privacyPolicy => 'Politique de confidentialité';
 }

@@ -181,6 +181,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Save'**
   String get save;
+
+  /// Side menu.
+  ///
+  /// In en, this message translates to:
+  /// **'Menu'**
+  String get sideMenuTitle;
+
+  /// Biblical Calendar title.
+  ///
+  /// In en, this message translates to:
+  /// **'Biblical Calendar'**
+  String get biblicalCalendar;
+
+  /// Translations.
+  ///
+  /// In en, this message translates to:
+  /// **'Translations'**
+  String get translations;
+
+  /// Reader.
+  ///
+  /// In en, this message translates to:
+  /// **'Reader'**
+  String get reader;
+
+  /// Favorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get favorites;
+
+  /// Settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings;
+
+  /// About.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get about;
+
+  /// Contact.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact'**
+  String get contact;
+
+  /// Privacy Policy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get privacyPolicy;
 }
 
 class _AppLocalizationsDelegate

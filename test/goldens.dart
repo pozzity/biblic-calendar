@@ -14,20 +14,22 @@ Future<void> multiScreenMultiLocaleGolden(
 
   await tester.pumpAndSettle();
 
-  await tester.pumpWidgetBuilder(ObxValue((localeX) {
-    return MaterialApp(
-      title: 'Biblical Calendar',
-      supportedLocales: AppLocalizations.supportedLocales,
-      locale: localeX.value,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      themeMode: Get.isDarkMode ? ThemeMode.dark : ThemeMode.light,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.brown),
-        useMaterial3: true,
-      ),
-      home: widget,
-    );
-  }, IntlService.instance.localeRx));
+  await tester.pumpWidgetBuilder(
+    ObxValue((localeX) {
+      return MaterialApp(
+        title: 'Biblical Calendar',
+        supportedLocales: AppLocalizations.supportedLocales,
+        locale: localeX.value,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        themeMode: Get.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.brown),
+          useMaterial3: true,
+        ),
+        home: widget,
+      );
+    }, IntlService.instance.localeRx),
+  );
   // Screenshot the widget in each supported locale.
   for (final locale in AppLocalizations.supportedLocales) {
     IntlService.instance.updateLocale(locale);
@@ -38,8 +40,10 @@ Future<void> multiScreenMultiLocaleGolden(
       '$name.${locale.languageCode}',
       devices: [
         Device(name: 'phone_landscape', size: Device.iphone11.size.flipped),
-        Device(name: 'phone_landscape', size: Device.iphone11.size.flipped)
-            .dark(),
+        Device(
+          name: 'phone_landscape',
+          size: Device.iphone11.size.flipped,
+        ).dark(),
         Device.phone,
         Device.phone.dark(),
       ],

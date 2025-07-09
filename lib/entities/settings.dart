@@ -17,10 +17,7 @@ class Settings {
     this.preferredLanguage = "fr",
   });
 
-  Settings copyWith({
-    bool? isFirstStepCompleted,
-    String? preferredLanguage,
-  }) {
+  Settings copyWith({bool? isFirstStepCompleted, String? preferredLanguage}) {
     return Settings(
       id: id,
       isFirstStepCompleted: isFirstStepCompleted ?? this.isFirstStepCompleted,

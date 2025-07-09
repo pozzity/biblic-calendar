@@ -54,5 +54,41 @@
     "save": "Enregistrer",
     "@save": {
     "description": "Save."
+    },
+    "sideMenuTitle": "Menu",
+    "@sideMenuTitle": {
+        "description": "Side menu."
+    },
+    "biblicalCalendar": "Calendrier Biblique",
+    "@biblicalCalendar": {
+        "description": "Biblical Calendar title."
+    },
+    "translations": "Traductions",
+    "@translations": {
+        "description": "Translations menu."
+    },
+    "reader": "Lecteur",
+    "@reader": {
+        "description": "Reader."
+    },
+    "favorites": "Favoris",
+    "@favorites": {
+        "description": "Favorites."
+    },
+    "settings": "Paramètres",
+    "@settings": {
+        "description": "Settings menu."
+    },
+    "about": "À propos",
+    "@about": {
+        "description": "About menu."
+    },
+    "contact": "Contact",
+    "@contact": {
+        "description": "Contact menu."
+    },
+    "privacyPolicy": "Politique de confidentialité",
+    "@privacyPolicy": {
+        "description": "Privacy Policy menu."
     }
 }
