@@ -1,14 +1,10 @@
-export 'intro_view.dart';
-export 'widgets/language.dart';
-export 'controller.dart';
-import 'package:biblic_calendar/features/navigation/view.dart';
-import 'package:biblic_calendar/l10n/app_localizations.dart';
 import 'package:biblic_calendar/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'controller.dart';
 import 'widgets/language.dart';
+import '../navigation/view.dart';
+import '../../l10n/app_localizations.dart';
 
 class IntroView extends StatelessWidget {
   const IntroView({super.key});
