@@ -1,14 +1,14 @@
-export 'navigation_view.dart';
-import 'package:biblic_calendar/features/bible_reader/view.dart';
-import 'package:biblic_calendar/features/bible_translates/view.dart';
-import 'package:biblic_calendar/features/favorite/view.dart';
-import 'package:biblic_calendar/l10n/app_localizations.dart';
-import 'package:biblic_calendar/services/bible_api_service.dart';
-import 'package:biblic_calendar/services/intl/intl.dart';
-import 'package:biblic_calendar/utils/styles.dart';
+import '../bible_reader/view.dart';
+import '../bible_translates/view.dart';
+import '../favorite/view.dart';
+import '../../l10n/app_localizations.dart';
+import '../../services/bible_api_service.dart';
+import '../../services/intl/intl.dart';
+import '../../utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+/// Main navigation view for the app.
 class NavigationView extends StatefulWidget {
   const NavigationView({super.key});
 
@@ -17,8 +17,7 @@ class NavigationView extends StatefulWidget {
 }
 
 class _NavigationViewState extends State<NavigationView> {
-  int _selectedIndex =
-      1; // Start with BibleTranslatesView as the first focused page
+  int _selectedIndex = 1;
   final BibleApiService api = Get.put(BibleApiService());
 
   final List<Widget> _pages = [
@@ -29,7 +28,6 @@ class _NavigationViewState extends State<NavigationView> {
 
   void _onItemTapped(int index) {
     if (api.defaultVersionId.value == null && index != 1) {
-      // Only allow access to BibleTranslatesView if no default version
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Please select a default Bible version first.')),
       );
