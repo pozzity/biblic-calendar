@@ -1,62 +1,15 @@
-import 'package:biblic_calendar/entities/settings.dart';
 import 'package:biblic_calendar/features/intro/controller.dart';
 import 'package:biblic_calendar/l10n/app_localizations.dart';
-import 'package:biblic_calendar/objectbox.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:biblic_calendar/features/intro/widgets/language.dart';
 import 'package:get/get.dart';
 import 'package:biblic_calendar/services/intl/intl.dart';
+import 'package:biblic_calendar/services/intl/mock_intl_service.dart';
 import 'package:biblic_calendar/services/preferences/preferences.dart';
 import 'package:biblic_calendar/services/database/database.dart';
-
-class MockIntlService extends IntlService {
-  MockIntlService() : super.localeLang();
-
-  @override
-  Locale get locale => localeRx.value;
-
-  @override
-  void updateLocale(Locale locale) {
-    localeRx.value = locale;
-  }
-}
-
-class MockDatabase extends GetxService implements Database {
-  final _settingsBox = MockSettingsBox();
-
-  @override
-  Box<Settings> get settings => _settingsBox;
-  Future<void> init() async {}
-}
-
-class MockSettingsBox implements Box<Settings> {
-  final Map<int, Settings> _store = {};
-
-  @override
-  Settings? get(int id, {Settings? defaultValue}) => _store[id] ?? defaultValue;
-
-  @override
-  int put(Settings object, {PutMode mode = PutMode.insert}) {
-    final id = object.id;
-    object.id = id;
-    _store[id] = object;
-    return id;
-  }
-
-  @override
-  List<Settings> getAll({int? offset, int? limit}) {
-    var values = _store.values.toList();
-    if (offset != null) values = values.skip(offset).toList();
-    if (limit != null) values = values.take(limit).toList();
-    return values;
-  }
-
-  // Implement other required members with noSuchMethod for unused ones:
-  @override
-  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
-}
+import 'package:biblic_calendar/services/database/mock_database.dart';
 
 Widget languageWidgetWrapper() => ObxValue(
   (localeX) => MaterialApp(
@@ -98,7 +51,7 @@ Future<void> setupAll({bool skipDb = false}) async {
   if (!skipDatabase) {
     await Get.putAsync(() => Database.create(isInMemory: true));
   } else {
-    Get.put<Database>(MockDatabase());
+    Get.put<IDatabase>(MockDatabase());
     Get.put<IntlService>(MockIntlService());
   }
   Get.put(Preference());
@@ -110,10 +63,8 @@ Future<void> setupEach({bool skipDb = false}) async {
   if (!skipDatabase) {
     await Get.putAsync(IntlService.create);
   } else {
-    Get.replace<Database>(MockDatabase());
-    Get.replace<IntlService>(
-      MockIntlService() as dynamic,
-    ); // <-- Register as dynamic
+    Get.replace<IDatabase>(MockDatabase());
+    Get.replace<IntlService>(MockIntlService() as dynamic);
   }
 }
 
