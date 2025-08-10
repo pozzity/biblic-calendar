@@ -25,6 +25,9 @@ lib/
 |  |-- verse_favorites/
 |  |-- ai_recommandation/
 |  |-- ...
+|-- models/
+|  |-- settings.dart
+|  |-- index.dart
 |-- shared/
 |  |-- widgets/
 |  |-- services/
