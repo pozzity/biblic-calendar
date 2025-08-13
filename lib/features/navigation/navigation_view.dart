@@ -29,7 +29,9 @@ class _NavigationViewState extends State<NavigationView> {
   void _onItemTapped(int index) {
     if (api.defaultVersionId.value == null && index != 1) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please select a default Bible version first.')),
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.selectDefaultVersion),
+        ),
       );
       setState(() => _selectedIndex = 1);
       return;

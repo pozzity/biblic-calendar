@@ -235,6 +235,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Privacy Policy'**
   String get privacyPolicy;
+
+  // New keys for translations
+  String get searchBibleVersionHint;
+  String get download;
+  String get defaultLabel;
+  String get setAsDefault;
+  String get downloaded;
+  String get selectDefaultVersion;
+  String get chapter;
+  String get chapterShort;
+  String get noContentForChapter;
+  String get verse;
 }
 
 class _AppLocalizationsDelegate

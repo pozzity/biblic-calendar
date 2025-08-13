@@ -31,7 +31,9 @@ class _NavigationViewState extends State<NavigationView> {
     if (api.defaultVersionId.value == null && index != 1) {
       // Only allow access to BibleTranslatesView if no default version
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please select a default Bible version first.')),
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.selectDefaultVersion),
+        ),
       );
       setState(() => _selectedIndex = 1);
       return;

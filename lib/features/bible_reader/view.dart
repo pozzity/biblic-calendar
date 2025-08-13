@@ -5,6 +5,7 @@ import 'package:biblic_calendar/services/bible_api_service.dart';
 import 'package:biblic_calendar/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:biblic_calendar/l10n/app_localizations.dart';
 
 class BibleReaderView extends StatefulWidget {
   const BibleReaderView({super.key});
@@ -51,7 +52,7 @@ class _BibleReaderViewState extends State<BibleReaderView>
     final versionId = api.downloadedVersions
         .firstWhereOrNull((v) => v.isDefault)
         ?.id;
-    print("Version ID: $versionId");
+    debugPrint("Version ID: $versionId");
     if (versionId != null) {
       final content = await api.fetchChapterContent(versionId, bookId, chapter);
       setState(() {
@@ -135,7 +136,10 @@ class _BibleReaderViewState extends State<BibleReaderView>
                       shape: StadiumBorder(),
                       elevation: 6,
                     ),
-                    child: Text('Ch. $chap', style: Styles.i.tsBody1),
+                    child: Text(
+                      '${AppLocalizations.of(context)!.chapterShort} $chap',
+                      style: Styles.i.tsBody1,
+                    ),
                     onPressed: () async {
                       Navigator.pop(context);
                       await _loadChapter(book.id, chap);
@@ -164,7 +168,7 @@ class _BibleReaderViewState extends State<BibleReaderView>
         itemCount: _content.length,
         itemBuilder: (context, idx) {
           final item = _content[idx];
-          print('Item: $item');
+          debugPrint('Item: $item');
           if (item.type == "heading") {
             final headingText =
                 (item.content != null && item.content!.isNotEmpty)
@@ -213,7 +217,7 @@ class _BibleReaderViewState extends State<BibleReaderView>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'verse $verseNum:',
+                      '${AppLocalizations.of(context)!.verse} $verseNum:',
                       style: Styles.i.tsBody1.withValues(
                         fontStyle: FontStyle.italic,
                         decoration: TextDecoration.underline,
@@ -285,7 +289,10 @@ class _BibleReaderViewState extends State<BibleReaderView>
                     });
                   },
                 ),
-                Text('Chapter $_selectedChapter', style: Styles.i.tsHeader1),
+                Text(
+                  '${AppLocalizations.of(context)!.chapter} $_selectedChapter',
+                  style: Styles.i.tsHeader1,
+                ),
               ],
             ),
           ),
@@ -293,7 +300,7 @@ class _BibleReaderViewState extends State<BibleReaderView>
             child: _content.isEmpty
                 ? Center(
                     child: Text(
-                      'No content found for this chapter.',
+                      AppLocalizations.of(context)!.noContentForChapter,
                       style: Styles.i.tsBody1,
                     ),
                   )

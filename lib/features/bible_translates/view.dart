@@ -2,8 +2,8 @@ import 'package:biblic_calendar/models/bible_version.dart';
 import 'package:biblic_calendar/services/bible_api_service.dart';
 import 'package:biblic_calendar/utils/styles.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
+import 'package:biblic_calendar/l10n/app_localizations.dart';
 
 class BibleTranslatesView extends StatefulWidget {
   const BibleTranslatesView({super.key});
@@ -121,7 +121,10 @@ class _BibleTranslatesViewState extends State<BibleTranslatesView> {
                         ),
                       ),
                       icon: Icon(Icons.download, size: 18),
-                      label: Text('Download', style: Styles.i.tsBody),
+                      label: Text(
+                        AppLocalizations.of(context)!.download,
+                        style: Styles.i.tsBody,
+                      ),
                       onPressed: () async {
                         setState(() => _downloadingId = version.id);
                         await api.downloadVersion(version);
@@ -146,7 +149,9 @@ class _BibleTranslatesViewState extends State<BibleTranslatesView> {
                 ),
                 icon: Icon(Icons.check, size: 18),
                 label: Text(
-                  isDefault ? 'Default' : 'Set as default',
+                  isDefault
+                      ? AppLocalizations.of(context)!.defaultLabel
+                      : AppLocalizations.of(context)!.setAsDefault,
                   style: Styles.i.tsBody,
                 ),
                 onPressed: isDefault
@@ -174,7 +179,7 @@ class _BibleTranslatesViewState extends State<BibleTranslatesView> {
             child: TextField(
               controller: _searchCtrl,
               decoration: InputDecoration(
-                hintText: 'Search Bible version...',
+                hintText: AppLocalizations.of(context)!.searchBibleVersionHint,
                 prefixIcon: Icon(Icons.search),
                 filled: true,
                 fillColor: Colors.brown.shade50,
@@ -198,7 +203,7 @@ class _BibleTranslatesViewState extends State<BibleTranslatesView> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                'Downloaded: ${downloaded.map((v) => v.name).join(', ')}',
+                '${AppLocalizations.of(context)!.downloaded}: ${downloaded.map((v) => v.name).join(', ')}',
                 style: Styles.i.tsBody1,
               ),
             ),
@@ -206,8 +211,8 @@ class _BibleTranslatesViewState extends State<BibleTranslatesView> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                'Please select a default Bible version to continue.',
-                style: Styles.i.tsHeader.withValues(color: Colors.red),
+                AppLocalizations.of(context)!.selectDefaultVersion,
+                style: Styles.i.tsBody1.withValues(color: Colors.red),
               ),
             ),
         ],

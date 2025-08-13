@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
@@ -72,20 +73,30 @@ class BibleApiService extends GetxService {
     try {
       final res = await http.get(Uri.parse(_translationsUrl));
       if (res.statusCode == 200) {
-        final data = jsonDecode(res.body);
-        if (data['translations'] is List) {
-          _allTranslations = (data['translations'] as List)
+        final allVersions = jsonDecode(res.body);
+        // Build and cache the initial (empty query) results
+        if (allVersions['translations'] is List) {
+          List<BibleVersion> results = (allVersions['translations'] as List)
               .map<BibleVersion>((e) => BibleVersion.fromJson(e))
               .toList();
+          final defaultId = defaultVersionId.value;
+          if (defaultId != null) {
+            final idx = results.indexWhere((v) => v.id == defaultId);
+            if (idx > 0) {
+              final def = results.removeAt(idx);
+              results.insert(0, def);
+            }
+          }
+          _allTranslations = results;
         } else {
-          print('Unexpected JSON structure: $data');
+          debugPrint('Unexpected JSON structure: $allVersions');
         }
       } else {
-        print('API error: ${res.statusCode} for $_translationsUrl');
-        print('Response: ${res.body}');
+        debugPrint('API error: ${res.statusCode} for $_translationsUrl');
+        debugPrint('Response: ${res.body}');
       }
     } catch (e) {
-      print('Error loading translations: $e');
+      debugPrint('Error loading translations: $e');
     }
   }
 
