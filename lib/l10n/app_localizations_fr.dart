@@ -80,35 +80,4 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get privacyPolicy => 'Politique de confidentialité';
-
-  @override
-  String get searchBibleVersionHint => 'Rechercher une version de la Bible...';
-
-  @override
-  String get download => 'Télécharger';
-
-  @override
-  String get defaultLabel => 'Par défaut';
-
-  @override
-  String get setAsDefault => 'Définir par défaut';
-
-  @override
-  String get downloaded => 'Téléchargés';
-
-  @override
-  String get selectDefaultVersion =>
-      'Veuillez sélectionner une version de la Bible par défaut pour continuer.';
-
-  @override
-  String get chapter => 'Chapitre';
-
-  @override
-  String get chapterShort => 'Ch.';
-
-  @override
-  String get noContentForChapter => 'Aucun contenu trouvé pour ce chapitre.';
-
-  @override
-  String get verse => 'verset';
 }

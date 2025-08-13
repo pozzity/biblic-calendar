@@ -5,7 +5,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:golden_toolkit/golden_toolkit.dart';
 import 'package:biblic_calendar/services/intl/mock_intl_service.dart';
-import 'dart:io';
 
 Future<void> multiScreenMultiLocaleGolden(
   WidgetTester tester,
