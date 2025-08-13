@@ -7,7 +7,7 @@ import 'package:get/state_manager.dart';
 /// Service for handling application preferences.
 class Preference extends GetxService {
   /// The database.
-  Box<Settings> get _box => Get.find<Database>().settings;
+  Box<Settings> get _box => Get.find<IDatabase>().settings;
   Settings? _settings;
 
   /// The settings.

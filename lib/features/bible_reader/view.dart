@@ -51,7 +51,7 @@ class _BibleReaderViewState extends State<BibleReaderView>
     final versionId = api.downloadedVersions
         .firstWhereOrNull((v) => v.isDefault)
         ?.id;
-    print("Version ID: ${versionId}");
+    print("Version ID: $versionId");
     if (versionId != null) {
       final content = await api.fetchChapterContent(versionId, bookId, chapter);
       setState(() {

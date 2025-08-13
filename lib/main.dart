@@ -12,7 +12,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   debugPrint('isTestMode: $isTestMode');
 
-  await Get.putAsync<Database>(() {
+  await Get.putAsync<IDatabase>(() {
     return Database.create(isInMemory: isTestMode || kDebugMode);
   });
   Get.putAsync<IntlService>(IntlService.create);

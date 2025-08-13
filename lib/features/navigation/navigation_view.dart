@@ -85,13 +85,19 @@ class _NavigationViewState extends State<NavigationView> {
   }
 
   Widget _buildLanguageSwitcher(BuildContext context) {
+    final supported = AppLocalizations.supportedLocales;
+    final current = IntlService.instance.localeRx.value;
+    final normalized = supported.firstWhere(
+      (l) => l.languageCode == current.languageCode,
+      orElse: () => supported.first,
+    );
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(AppLocalizations.of(context)!.language, style: Styles.i.tsHeader1),
         DropdownButton<Locale>(
-          value: IntlService.instance.localeRx.value,
-          items: AppLocalizations.supportedLocales.map((locale) {
+          value: normalized,
+          items: supported.map((locale) {
             return DropdownMenuItem(
               value: locale,
               child: Text(
