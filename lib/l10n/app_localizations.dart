@@ -235,6 +235,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Privacy Policy'**
   String get privacyPolicy;
+
+  /// Hint for search field on translations screen.
+  ///
+  /// In en, this message translates to:
+  /// 'Search Bible version...'
+  String get searchBibleVersionHint;
+
+  /// Download action label.
+  ///
+  /// In en, this message translates to:
+  /// 'Download'
+  String get download;
+
+  /// Label for default translation.
+  ///
+  /// In en, this message translates to:
+  /// 'Default'
+  String get defaultLabel;
+
+  /// Label to set a translation as default.
+  ///
+  /// In en, this message translates to:
+  /// 'Set as default'
+  String get setAsDefault;
+
+  /// Downloaded prefix label.
+  ///
+  /// In en, this message translates to:
+  /// 'Downloaded'
+  String get downloaded;
+
+  /// Message to request selecting a default Bible version.
+  ///
+  /// In en, this message translates to:
+  /// 'Please select a default Bible version to continue.'
+  String get selectDefaultVersion;
+
+  /// Chapter label.
+  ///
+  /// In en, this message translates to:
+  /// 'Chapter'
+  String get chapter;
+
+  /// Short chapter label.
+  ///
+  /// In en, this message translates to:
+  /// 'Ch.'
+  String get chapterShort;
+
+  /// Message for empty chapter content.
+  ///
+  /// In en, this message translates to:
+  /// 'No content found for this chapter.'
+  String get noContentForChapter;
+
+  /// Verse label.
+  ///
+  /// In en, this message translates to:
+  /// 'verse'
+  String get verse;
 }
 
 class _AppLocalizationsDelegate

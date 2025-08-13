@@ -79,4 +79,35 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get privacyPolicy => 'Privacy Policy';
+
+  @override
+  String get searchBibleVersionHint => 'Search Bible version...';
+
+  @override
+  String get download => 'Download';
+
+  @override
+  String get defaultLabel => 'Default';
+
+  @override
+  String get setAsDefault => 'Set as default';
+
+  @override
+  String get downloaded => 'Downloaded';
+
+  @override
+  String get selectDefaultVersion =>
+      'Please select a default Bible version to continue.';
+
+  @override
+  String get chapter => 'Chapter';
+
+  @override
+  String get chapterShort => 'Ch.';
+
+  @override
+  String get noContentForChapter => 'No content found for this chapter.';
+
+  @override
+  String get verse => 'verse';
 }
