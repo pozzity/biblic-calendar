@@ -3,14 +3,20 @@ import 'package:biblic_calendar/features/bible_reader/view.dart';
 import 'package:biblic_calendar/l10n/app_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:golden_toolkit/golden_toolkit.dart';
+import 'package:get/get.dart';
 
 import '../../../goldens.dart';
 import '../../bible_reader_test.dart' as bible_reader_test;
+import 'package:biblic_calendar/services/bible_api_service.dart';
 
 void main() {
   group('Goldens', () {
     setUp(() async {
-      // If you have setup logic, add here
+      Get.reset();
+      final api = BibleApiService();
+      api.downloadedVersions.clear();
+      api.defaultVersionId.value = null;
+      Get.put(api);
     });
     testGoldens('BibleReaderView', (tester) async {
       await multiScreenMultiLocaleGolden(

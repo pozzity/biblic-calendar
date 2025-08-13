@@ -41,7 +41,7 @@ Widget languageWidgetWrapper() => ObxValue(
       ),
     ),
   ),
-  IntlService.instance.localeRx,
+  Get.find<IntlService>().localeRx,
 );
 
 bool skipDatabase = false;
