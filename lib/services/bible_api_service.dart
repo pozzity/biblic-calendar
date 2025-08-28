@@ -49,18 +49,25 @@ class BibleApiService extends GetxService {
     final dir = await _appDir();
     final file = File('${dir.path}/downloaded_versions.json');
     if (await file.exists()) {
-      final data = jsonDecode(await file.readAsString());
-      downloadedVersions.assignAll(
-        (data as List).map((e) => BibleVersion.fromJson(e)).toList(),
-      );
-      // Ensure isDownloaded is true for all loaded versions
-      for (var i = 0; i < downloadedVersions.length; i++) {
-        downloadedVersions[i] = downloadedVersions[i].copyWith(
-          isDownloaded: true,
+      final raw = jsonDecode(await file.readAsString());
+      if (raw is List) {
+        final parsed = raw
+            .whereType<Map<String, dynamic>>()
+            .map((e) => BibleVersion.fromJson(e))
+            .toList();
+        downloadedVersions.assignAll(parsed);
+        for (var i = 0; i < downloadedVersions.length; i++) {
+          downloadedVersions[i] = downloadedVersions[i].copyWith(
+            isDownloaded: true,
+          );
+        }
+        final def = downloadedVersions.firstWhereOrNull((v) => v.isDefault);
+        if (def != null) defaultVersionId.value = def.id;
+      } else {
+        debugPrint(
+          'downloaded_versions.json root is not a List. Ignored: $raw',
         );
       }
-      final def = downloadedVersions.firstWhereOrNull((v) => v.isDefault);
-      if (def != null) defaultVersionId.value = def.id;
     }
   }
 
@@ -74,10 +81,13 @@ class BibleApiService extends GetxService {
       final res = await http.get(Uri.parse(_translationsUrl));
       if (res.statusCode == 200) {
         final allVersions = jsonDecode(res.body);
-        // Build and cache the initial (empty query) results
-        if (allVersions['translations'] is List) {
-          List<BibleVersion> results = (allVersions['translations'] as List)
-              .map<BibleVersion>((e) => BibleVersion.fromJson(e))
+        final translations = allVersions is Map
+            ? allVersions['translations']
+            : null;
+        if (translations is List) {
+          final results = translations
+              .whereType<Map<String, dynamic>>()
+              .map<BibleVersion>(BibleVersion.fromJson)
               .toList();
           final defaultId = defaultVersionId.value;
           if (defaultId != null) {
@@ -89,11 +99,14 @@ class BibleApiService extends GetxService {
           }
           _allTranslations = results;
         } else {
-          debugPrint('Unexpected JSON structure: $allVersions');
+          debugPrint(
+            'Unexpected JSON structure for translations: $allVersions',
+          );
         }
       } else {
-        debugPrint('API error: ${res.statusCode} for $_translationsUrl');
-        debugPrint('Response: ${res.body}');
+        debugPrint(
+          'API error: ${res.statusCode} for $_translationsUrl\n${res.body}',
+        );
       }
     } catch (e) {
       debugPrint('Error loading translations: $e');
@@ -109,7 +122,14 @@ class BibleApiService extends GetxService {
     final booksFile = File('${dir.path}/bibles/$translationId/books.json');
     if (await booksFile.exists()) {
       final data = jsonDecode(await booksFile.readAsString());
-      return (data as List).map((e) => BibleBook.fromJson(e)).toList();
+      if (data is List) {
+        return data
+            .whereType<Map<String, dynamic>>()
+            .map((e) => BibleBook.fromJson(e))
+            .toList();
+      }
+      debugPrint('Local books.json not a List: $data');
+      return [];
     }
     if (isTestMode) return [];
     final res = await http.get(
@@ -118,10 +138,14 @@ class BibleApiService extends GetxService {
     if (res.statusCode == 200) {
       final data = jsonDecode(res.body);
       List<BibleBook> books = [];
-      if (data['books'] is List) {
-        books = (data['books'] as List)
+      final rawBooks = (data is Map) ? data['books'] : null;
+      if (rawBooks is List) {
+        books = rawBooks
+            .whereType<Map<String, dynamic>>()
             .map((e) => BibleBook.fromJson(e))
             .toList();
+      } else {
+        debugPrint('Unexpected books structure: $data');
       }
       if (save) {
         await booksFile.create(recursive: true);
@@ -272,7 +296,18 @@ class BibleApiService extends GetxService {
     final dir = await _appDir();
     final file = File('${dir.path}/favorites.json');
     if (await file.exists()) {
-      favoriteVerses.assignAll(jsonDecode(await file.readAsString()));
+      try {
+        final raw = jsonDecode(await file.readAsString());
+        if (raw is List) {
+          favoriteVerses.assignAll(
+            raw.whereType<Map<String, dynamic>>().toList(),
+          );
+        } else {
+          debugPrint('favorites.json root is not a List. Ignored.');
+        }
+      } catch (e) {
+        debugPrint('Error parsing favorites.json: $e');
+      }
     }
   }
 

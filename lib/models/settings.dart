@@ -2,11 +2,24 @@ import 'package:objectbox/objectbox.dart';
 
 @Entity()
 class Settings {
+  @Id()
   int id;
+  String preferredLanguage;
+  bool isFirstStepCompleted;
 
-  // Add more fields as needed, e.g.:
-  // String? language;
-  // bool? darkMode;
+  Settings({
+    this.id = 0,
+    this.preferredLanguage = 'en',
+    this.isFirstStepCompleted = false,
+  });
 
-  Settings({this.id = 0});
+  Settings copyWith({
+    int? id,
+    String? preferredLanguage,
+    bool? isFirstStepCompleted,
+  }) => Settings(
+    id: id ?? this.id,
+    preferredLanguage: preferredLanguage ?? this.preferredLanguage,
+    isFirstStepCompleted: isFirstStepCompleted ?? this.isFirstStepCompleted,
+  );
 }

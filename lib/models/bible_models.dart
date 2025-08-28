@@ -11,15 +11,26 @@ class BibleChapter {
     required this.footnotes,
   });
 
-  factory BibleChapter.fromJson(Map<String, dynamic> json) => BibleChapter(
-    number: json['chapter']?['number'] ?? 0,
-    content: (json['chapter']?['content'] as List? ?? [])
-        .map((v) => BibleContent.fromJson(v))
-        .toList(),
-    footnotes: (json['chapter']?['footnotes'] as List? ?? [])
-        .map((v) => BibleFootnote.fromJson(v))
-        .toList(),
-  );
+  factory BibleChapter.fromJson(Map<String, dynamic> json) {
+    final chapter = json['chapter'];
+    final number = chapter is Map ? (chapter['number'] ?? 0) : 0;
+    final rawContent = chapter is Map ? chapter['content'] : null;
+    final contentList = rawContent is List
+        ? rawContent.map((e) => BibleContent.fromDynamic(e)).toList()
+        : <BibleContent>[];
+    final rawFootnotes = chapter is Map ? chapter['footnotes'] : null;
+    final footnotesList = rawFootnotes is List
+        ? rawFootnotes
+              .whereType<Map<String, dynamic>>()
+              .map((v) => BibleFootnote.fromJson(v))
+              .toList()
+        : <BibleFootnote>[];
+    return BibleChapter(
+      number: number,
+      content: contentList,
+      footnotes: footnotesList,
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     'number': number,
@@ -45,7 +56,9 @@ class BibleFootnote {
     noteId: json['noteId'] ?? 0,
     text: json['text'] ?? '',
     caller: json['caller'] ?? '',
-    reference: json['reference'],
+    reference: json['reference'] is Map<String, dynamic>
+        ? json['reference'] as Map<String, dynamic>
+        : null,
   );
 
   Map<String, dynamic> toJson() => {

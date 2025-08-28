@@ -1,4 +1,4 @@
-import 'package:biblic_calendar/entities/settings.dart';
+import 'package:biblic_calendar/models/settings.dart'; // changed from entities/settings.dart
 import 'package:biblic_calendar/objectbox.g.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
@@ -20,7 +20,26 @@ class Database extends GetxService implements IDatabase {
   static final key = const Key("database");
 
   @override
-  Box<Settings> get settings => _store.box<Settings>();
+  Box<Settings> get settings {
+    try {
+      return _store.box<Settings>();
+    } on ArgumentError catch (e) {
+      // Provide clearer context for the common "Unknown entity type" issue.
+      if (e.message.toString().contains('Unknown entity type')) {
+        throw FlutterError(
+          'ObjectBox: Unknown entity type Settings.\n'
+          'Possible causes:\n'
+          '  1. The Settings class is missing the @Entity() annotation.\n'
+          '  2. objectbox.g.dart is outdated. Run: flutter pub run build_runner build --delete-conflicting-outputs\n'
+          '  3. Another generated objectbox.g.dart from a different package is being picked up.\n'
+          '  4. You changed the entity name but did not rebuild.\n'
+          'Resolution: Verify entities/settings.dart has @Entity() above class Settings, then regenerate.\n'
+          'Original error: $e',
+        );
+      }
+      rethrow;
+    }
+  }
 
   /// Create an instance of ObjectBox to use throughout the app.
   static Future<Database> create({bool isInMemory = false}) async {

@@ -1,4 +1,4 @@
-import 'package:biblic_calendar/entities/settings.dart';
+import 'package:biblic_calendar/models/settings.dart'; // changed from entities/settings.dart
 import 'package:biblic_calendar/services/database/database.dart';
 import 'package:biblic_calendar/objectbox.g.dart';
 import 'package:get/get.dart';
@@ -17,16 +17,18 @@ class MockDatabase extends GetxService implements IDatabase {
 
 class MockSettingsBox implements Box<Settings> {
   final Map<int, Settings> _store = {};
+  int _nextId = 1;
 
   @override
   Settings? get(int id, {Settings? defaultValue}) => _store[id] ?? defaultValue;
 
   @override
   int put(Settings object, {PutMode mode = PutMode.insert}) {
-    final id = object.id;
-    object.id = id;
-    _store[id] = object;
-    return id;
+    if (object.id == 0) {
+      object.id = _nextId++;
+    }
+    _store[object.id] = object;
+    return object.id;
   }
 
   @override
