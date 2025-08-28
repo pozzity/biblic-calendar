@@ -57,6 +57,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sideMenuTitle => 'Menu';
 
   @override
+  String get selectDefaultVersion => 'Please select a default version first';
+
+  @override
   String get biblicalCalendar => 'Biblical Calendar';
 
   @override
@@ -96,10 +99,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get downloaded => 'Downloaded';
 
   @override
-  String get selectDefaultVersion =>
-      'Please select a default Bible version to continue.';
-
-  @override
   String get chapter => 'Chapter';
 
   @override
@@ -109,5 +108,5 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noContentForChapter => 'No content found for this chapter.';
 
   @override
-  String get verse => 'verse';
+  String get verse => 'Verse';
 }

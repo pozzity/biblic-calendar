@@ -188,6 +188,12 @@ abstract class AppLocalizations {
   /// **'Menu'**
   String get sideMenuTitle;
 
+  /// Select default version.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a default version first'**
+  String get selectDefaultVersion;
+
   /// Biblical Calendar title.
   ///
   /// In en, this message translates to:
@@ -236,64 +242,58 @@ abstract class AppLocalizations {
   /// **'Privacy Policy'**
   String get privacyPolicy;
 
-  /// Hint for search field on translations screen.
+  /// Search Bible version hint.
   ///
   /// In en, this message translates to:
-  /// 'Search Bible version...'
+  /// **'Search Bible version...'**
   String get searchBibleVersionHint;
 
   /// Download action label.
   ///
   /// In en, this message translates to:
-  /// 'Download'
+  /// **'Download'**
   String get download;
 
   /// Label for default translation.
   ///
   /// In en, this message translates to:
-  /// 'Default'
+  /// **'Default'**
   String get defaultLabel;
 
   /// Label to set a translation as default.
   ///
   /// In en, this message translates to:
-  /// 'Set as default'
+  /// **'Set as default'**
   String get setAsDefault;
 
   /// Downloaded prefix label.
   ///
   /// In en, this message translates to:
-  /// 'Downloaded'
+  /// **'Downloaded'**
   String get downloaded;
-
-  /// Message to request selecting a default Bible version.
-  ///
-  /// In en, this message translates to:
-  /// 'Please select a default Bible version to continue.'
-  String get selectDefaultVersion;
 
   /// Chapter label.
   ///
   /// In en, this message translates to:
-  /// 'Chapter'
+  /// **'Chapter'**
   String get chapter;
 
   /// Short chapter label.
   ///
   /// In en, this message translates to:
-  /// 'Ch.'
+  /// **'Ch.'**
   String get chapterShort;
 
   /// Message for empty chapter content.
   ///
   /// In en, this message translates to:
-  /// 'No content found for this chapter.'
+  /// **'No content found for this chapter.'**
   String get noContentForChapter;
 
   /// Verse label.
   ///
   /// In en, this message translates to:
-  /// 'verse'
+  /// **'Verse'**
   String get verse;
 }
 

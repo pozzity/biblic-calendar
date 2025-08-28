@@ -58,6 +58,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get sideMenuTitle => 'Menu';
 
   @override
+  String get selectDefaultVersion =>
+      'Veuillez sélectionner une version par défaut d\'abord';
+
+  @override
   String get biblicalCalendar => 'Calendrier Biblique';
 
   @override
@@ -82,7 +86,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get privacyPolicy => 'Politique de confidentialité';
 
   @override
-  String get searchBibleVersionHint => 'Rechercher une version de la Bible...';
+  String get searchBibleVersionHint => 'Rechercher une version de la Bible';
 
   @override
   String get download => 'Télécharger';
@@ -94,11 +98,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get setAsDefault => 'Définir par défaut';
 
   @override
-  String get downloaded => 'Téléchargés';
-
-  @override
-  String get selectDefaultVersion =>
-      'Veuillez sélectionner une version de la Bible par défaut pour continuer.';
+  String get downloaded => 'Téléchargé';
 
   @override
   String get chapter => 'Chapitre';
@@ -110,5 +110,5 @@ class AppLocalizationsFr extends AppLocalizations {
   String get noContentForChapter => 'Aucun contenu trouvé pour ce chapitre.';
 
   @override
-  String get verse => 'verset';
+  String get verse => 'Verset';
 }
