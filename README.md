@@ -16,80 +16,124 @@
 
 ## 🏗️ Architecture
 
-We follow a **feature-based architecture**, where each major functionality is encapsulated within its own module. This promotes separation of concerns and improves maintainability.
-
 ```
 lib/
 |-- features/
-|  |-- bible_reading/
-|  |-- verse_favorites/
-|  |-- ai_recommandation/
-|  |-- ...
-|-- shared/
-|  |-- widgets/
-|  |-- services/
-|  |-- ...
+|   |-- bible_reader/
+|   |-- bible_translates/
+|   |-- favorite/
+|   |-- intro/
+|   |-- navigation/
+|-- models/
+|-- services/
+|-- utils/
+|-- l10n/
 ```
----
-
-## 🧰 Tech Stack
-
-- **Framework:** Flutter (Dart)
-- **CI/CD:** GitHub Actions
-- **AI Integration:** Personality-based verse suggestions (model details TBD)
 
 ---
 
-## 🧪 CI/CD with GitHub Actions
+## 🔧 Requirements
 
-We use **GitHub Actions** to automate testing and deployment processes. Pipelines include:
+| Tool | Version (min) |
+| ---- | ------------- |
+| Flutter | 3.32.4 |
+| Dart SDK | 3.8.x |
+| ObjectBox CLI (native libs) | Installed via script |
 
-- Code analysis and formatting checks
-- Unit and widget tests
-> pre-requisites: install objectbox library `bash <(curl -s https://raw.githubusercontent.com/objectbox/objectbox-dart/main/install.sh) --quiet`
-- Build verification
-- Automatic branch cleanup post-merge
-- Playstore Deployment
+---
+
+## ▶️ Getting Started
+
+```bash
+git clone https://github.com/your-org/biblic-calendar.git
+cd biblic-calendar
+flutter pub get
+bash <(curl -s https://raw.githubusercontent.com/objectbox/objectbox-dart/main/install.sh) --quiet
+flutter run
+```
+
+---
+
+## 🧪 Testing
+
+### Run all tests
+```bash
+flutter test
+```
+
+### Golden tests (tagged `golden`)
+```bash
+flutter test --tags=golden
+```
+
+### Update goldens
+```bash
+flutter test --update-goldens --tags=golden
+```
+
+### Coverage
+```bash
+flutter test --coverage
+genhtml coverage/lcov.info -o coverage/html  # (optional)
+```
+
+---
+
+## 🛠️ Useful Commands
+
+```bash
+flutter analyze
+dart format .
+flutter pub run build_runner build --delete-conflicting-outputs  # code gen
+```
+
+---
+
+## 🌐 Localization
+
+Generated via Flutter intl tooling (uses `flutter gen-l10n`). Add strings in `lib/l10n/` and rebuild:
+```bash
+flutter gen-l10n
+```
+
+---
+
+## 📦 Persistence
+
+- ObjectBox used for lightweight local settings.
+- Downloaded Bible data & favorites cached under app documents directory.
+
+---
+
+## 🔄 CI/CD (GitHub Actions)
+
+Pipelines include:
+- Formatting & analysis
+- Unit & widget tests (with objectbox native libs install)
+- Conditional golden regeneration (on failure)
+- Coverage upload
+- (Placeholder) Play Store deployment pipeline
 
 ---
 
 ## 📋 Contribution Rules
 
-1. Create a branch linked to the related issue (e.g:  if issue' name is "write readme" and is mentioned as a feature, the branch name will be `feature/write-readme`)
-2. After completing the issue, push your changes and request a review
-3. Ensure your branch is up-to-date with the `main` branch
-4. Confirm that all CI/CD pipeline jobs pass before merging
-5. Branch is automatically deleted after successful merge
-
----
-
-## 📅 Work Methodology
-
-We follow **Agile** principles:
-
-- ⏳ **Sprint Duration:** 3 weeks
-- 📦 **Release Cycle:** A release is produced at the end of each sprint
-- 🔄 Regular retrospectives and planning meetings
-
----
-
-## 🤝 Contributing
-
-We welcome contributions from the community! Please open an issue to discuss your ideas or bug reports. To contribute:
-
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes with clear messages
-4. Push and open a pull request
-
----
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
+1. Branch naming: `#<issue-number>-<kebab-case>`
+2. Keep PRs focused & small
+3. Ensure `flutter analyze` & tests pass
+4. Avoid committing generated artifacts (except localization/gen if required)
 
 ---
 
 ## 🙏 Acknowledgements
 
-Thanks to everyone contributing to making Biblic Calendar a powerful and inspiring tool for spiritual growth.
+Thanks to:
+- Flutter & Dart teams
+- ObjectBox for local persistence
+- Community contributors improving translations & UX
+
+---
+
+## 📄 License
+
+Released under the [MIT License](LICENSE).

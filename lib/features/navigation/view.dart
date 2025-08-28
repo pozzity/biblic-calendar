@@ -1,8 +1,13 @@
+export 'navigation_view.dart';
 import 'package:biblic_calendar/features/bible_reader/view.dart';
 import 'package:biblic_calendar/features/bible_translates/view.dart';
 import 'package:biblic_calendar/features/favorite/view.dart';
 import 'package:biblic_calendar/l10n/app_localizations.dart';
+import 'package:biblic_calendar/services/bible_api_service.dart';
+import 'package:biblic_calendar/services/intl/intl.dart';
+import 'package:biblic_calendar/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class NavigationView extends StatefulWidget {
   const NavigationView({super.key});
@@ -12,15 +17,27 @@ class NavigationView extends StatefulWidget {
 }
 
 class _NavigationViewState extends State<NavigationView> {
-  int _selectedIndex = 0;
+  int _selectedIndex =
+      1; // Start with BibleTranslatesView as the first focused page
+  final BibleApiService api = Get.put(BibleApiService());
 
   final List<Widget> _pages = [
-    BibleReaderView(),
-    BibleTranslatesView(),
-    FavoriteView(),
+    BibleReaderView() as Widget,
+    BibleTranslatesView() as Widget,
+    FavoriteView() as Widget,
   ];
 
   void _onItemTapped(int index) {
+    if (api.defaultVersionId.value == null && index != 1) {
+      // Only allow access to BibleTranslatesView if no default version
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.selectDefaultVersion),
+        ),
+      );
+      setState(() => _selectedIndex = 1);
+      return;
+    }
     setState(() {
       _selectedIndex = index;
     });
@@ -44,8 +61,16 @@ class _NavigationViewState extends State<NavigationView> {
                 child: Container(
                   height: double.infinity,
                   padding: const EdgeInsets.all(16),
-                  child: Center(
-                    child: Text(AppLocalizations.of(context)!.sideMenuTitle),
+                  child: Column(
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.sideMenuTitle,
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
+                      SizedBox(height: 24),
+                      _buildLanguageSwitcher(context),
+                      // ...add more menu items here...
+                    ],
                   ),
                 ),
               ),
@@ -63,6 +88,39 @@ class _NavigationViewState extends State<NavigationView> {
     );
   }
 
+  Widget _buildLanguageSwitcher(BuildContext context) {
+    final supported = AppLocalizations.supportedLocales;
+    final current = IntlService.instance.localeRx.value;
+    final normalized = supported.firstWhere(
+      (l) => l.languageCode == current.languageCode,
+      orElse: () => supported.first,
+    );
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(AppLocalizations.of(context)!.language, style: Styles.i.tsHeader1),
+        DropdownButton<Locale>(
+          value: normalized,
+          items: supported.map((locale) {
+            return DropdownMenuItem(
+              value: locale,
+              child: Text(
+                locale.languageCode == 'en'
+                    ? AppLocalizations.of(context)!.en
+                    : AppLocalizations.of(context)!.fr,
+              ),
+            );
+          }).toList(),
+          onChanged: (locale) {
+            if (locale != null) {
+              IntlService.instance.updateLocale(locale);
+            }
+          },
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,24 +132,27 @@ class _NavigationViewState extends State<NavigationView> {
         ],
       ),
       body: _pages[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.book),
-            label: AppLocalizations.of(context)!.reader,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.translate),
-            label: AppLocalizations.of(context)!.translations,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: AppLocalizations.of(context)!.favorites,
-          ),
-        ],
-      ),
+      bottomNavigationBar: Obx(() {
+        final disabled = api.defaultVersionId.value == null;
+        return BottomNavigationBar(
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.book, color: disabled ? Colors.grey : null),
+              label: AppLocalizations.of(context)!.reader,
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.translate),
+              label: AppLocalizations.of(context)!.translations,
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.favorite, color: disabled ? Colors.grey : null),
+              label: AppLocalizations.of(context)!.favorites,
+            ),
+          ],
+        );
+      }),
     );
   }
 }

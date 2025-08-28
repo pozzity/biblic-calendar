@@ -59,6 +59,10 @@
     "@sideMenuTitle": {
         "description": "Side menu."
     },
+    "selectDefaultVersion": "Please select a default version first",
+    "@selectDefaultVersion": {
+        "description": "Select default version."
+    },
     "biblicalCalendar": "Biblical Calendar",
     "@biblicalCalendar": {
         "description": "Biblical Calendar title."
@@ -90,5 +94,41 @@
     "privacyPolicy": "Privacy Policy",
     "@privacyPolicy": {
         "description": "Privacy Policy."
+    },
+    "searchBibleVersionHint": "Search Bible version...",
+    "@searchBibleVersionHint": {
+        "description": "Search Bible version hint."
+    },
+    "download": "Download",
+    "@download": {
+        "description": "Download action label."
+    },
+    "defaultLabel": "Default",
+    "@defaultLabel": {
+        "description": "Label for default translation."
+    },
+    "setAsDefault": "Set as default",
+    "@setAsDefault": {
+        "description": "Label to set a translation as default."
+    },
+    "downloaded": "Downloaded",
+    "@downloaded": {
+        "description": "Downloaded prefix label."
+    },
+    "chapter": "Chapter",
+    "@chapter": {
+        "description": "Chapter label."
+    },
+    "chapterShort": "Ch.",
+    "@chapterShort": {
+        "description": "Short chapter label."
+    },
+    "noContentForChapter": "No content found for this chapter.",
+    "@noContentForChapter": {
+        "description": "Message for empty chapter content."
+    },
+    "verse": "Verse",
+    "@verse": {
+        "description": "Verse label."
     }
 }

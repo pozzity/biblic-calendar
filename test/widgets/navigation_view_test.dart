@@ -21,6 +21,10 @@ Future<void> setupEach() async {
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
+  setUp(() async {
+    await setupEach();
+  });
+
   group('NavigationView', () {
     testWidgets('displays app bar title and bottom navigation items', (
       tester,
@@ -79,8 +83,9 @@ void main() {
       await tester.tap(find.byIcon(Icons.menu));
       await tester.pumpAndSettle();
 
-      // Side menu title should be visible
-      expect(find.text(localization.sideMenuTitle), findsOneWidget);
+      // Verify dialog content is visible (language label and dropdown)
+      expect(find.text(localization.language), findsOneWidget);
+      expect(find.byType(DropdownButton<Locale>), findsOneWidget);
 
       // Dismiss dialog
       await tester.tapAt(const Offset(10, 10));

@@ -1,4 +1,4 @@
-import 'package:biblic_calendar/entities/settings.dart';
+import 'package:biblic_calendar/models/settings.dart'; // changed from entities/settings.dart
 import 'package:biblic_calendar/objectbox.g.dart';
 import 'package:biblic_calendar/services/database/database.dart';
 import 'package:get/instance_manager.dart';
@@ -7,12 +7,12 @@ import 'package:get/state_manager.dart';
 /// Service for handling application preferences.
 class Preference extends GetxService {
   /// The database.
-  Box<Settings> get _box => Get.find<Database>().settings;
+  Box<Settings> get _box => Get.find<IDatabase>().settings;
   Settings? _settings;
 
   /// The settings.
   Settings get settings =>
-      _settings ??= _box.getAll().firstOrNull ?? Settings(id: 0);
+      _settings ??= _box.getAll().firstOrNull ?? Settings();
 
   /// Checks if it's the first time user load the app.
   bool get isFirstSetup => !settings.isFirstStepCompleted;
